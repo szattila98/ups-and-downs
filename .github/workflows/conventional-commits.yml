@@ -1,0 +1,21 @@
+name: Conventional commits
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["**"]
+    types: [opened, synchronize]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    name: Check conventional commit compliance
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Check commits
+        uses: cocogitto/cocogitto-action@main
