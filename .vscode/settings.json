@@ -1,0 +1,5 @@
+{
+  "files.insertFinalNewline": true,
+  "svelte.enable-ts-plugin": true,
+  "eslint.workingDirectories": ["./src"]
+}
