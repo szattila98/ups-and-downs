@@ -1,0 +1,23 @@
+ignore_merge_commits = true
+branch_whitelist = ["main"]
+pre_bump_hooks = ["yarn", "yarn version {{version}}"]
+post_bump_hooks = ["git push", "git push origin --tags"]
+
+[changelog]
+path = "CHANGELOG.md"
+template = "remote"
+remote = "github.com"
+repository = "ups-and-downs"
+owner = "szattila98"
+authors = [{ username = "szattila98", signature = "Attila Szőke" }]
+
+[packages]
+backend = { path = "src-tauri", pre_bump_hooks = [
+    "cargo set-version -p ups-and-downs {{version}}",
+] }
+
+[git_hooks.pre-push]
+script = """#!/bin/sh
+set -e
+cog check
+"""
