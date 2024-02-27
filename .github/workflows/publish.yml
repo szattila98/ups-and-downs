@@ -1,0 +1,119 @@
+name: Publish
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - "*"
+
+env:
+  CARGO_TERM_COLOR: always
+
+permissions:
+  contents: write
+
+jobs:
+  upload_license:
+    name: Upload License
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: LICENSE
+          path: LICENSE
+
+  build:
+    name: Build - ${{ matrix.platform }}
+    runs-on: ${{ matrix.platform }}
+    strategy:
+      matrix:
+        platform: [macos-latest, windows-latest, ubuntu-latest]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          shared-key: whooosh-${{ matrix.platform }}
+          workspaces: src-tauri
+
+      - uses: volta-cli/action@v4
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - if: matrix.platform == 'ubuntu-latest'
+        run: |
+          sudo apt update
+          sudo apt install libwebkit2gtk-4.0-dev \
+              build-essential \
+              curl \
+              wget \
+              file \
+              libssl-dev \
+              libgtk-3-dev \
+              libayatana-appindicator3-dev \
+              librsvg2-dev
+
+      - run: yarn install --immutable
+
+      - run: yarn tauri build --ci
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: artifact-${{ matrix.platform }}
+          path: src-tauri/target/release/bundle
+          retention-days: 7
+
+  upload_to_release:
+    needs: [build, upload_license]
+    name: Publish binaries
+    runs-on: ubuntu-latest
+    if: ${{ github.ref_type == 'tag' }}
+    steps:
+      - uses: actions/download-artifact@v4
+
+      - run: ls -R
+
+      - name: Copy artifacts to archive
+        run: |
+          mv artifact-macos-latest macos
+          chmod +x -R macos
+          cp -r LICENSE/LICENSE macos/
+          tar -czf macos.tar.gz macos/*
+
+          mv artifact-windows-latest windows
+          chmod +x -R windows
+          cp -r LICENSE/LICENSE windows/
+          tar -czf windows.tar.gz windows/*
+
+          mv artifact-ubuntu-latest linux
+          chmod +x -R linux
+          cp -r LICENSE/LICENSE linux/
+          tar -czf linux.tar.gz linux/*
+
+      - uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: macos.tar.gz
+          tag: ${{ github.ref }}
+          asset_name: macos-${{ github.ref_name }}.tar.gz
+          body: "macos app and dmg"
+
+      - uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: windows.tar.gz
+          tag: ${{ github.ref }}
+          asset_name: windows-${{ github.ref_name }}.tar.gz
+          body: "windows msi and exe"
+
+      - uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: linux.tar.gz
+          tag: ${{ github.ref }}
+          asset_name: linux-${{ github.ref_name }}.tar.gz
+          body: "linux deb and appimage"

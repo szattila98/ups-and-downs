@@ -12,15 +12,14 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - name: Wait on commit checks
+      - name: Wait on conventinal commit compliance check
         uses: lewagon/wait-on-check-action@master
         with:
           ref: ${{ github.sha }}
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           check-name: "Check conventional commit compliance"
 
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - run: |
@@ -29,16 +28,13 @@ jobs:
           git config --global user.email github-actions@github.com
           git config --global user.name github-actions
 
-      - name: Install stable toolchain
-        uses: dtolnay/rust-toolchain@stable
+      - uses: dtolnay/rust-toolchain@stable
 
-      - name: Install cargo-edit
-        uses: baptiste0928/cargo-install@v2
+      - uses: baptiste0928/cargo-install@v2
         with:
           crate: cargo-edit
 
-      - name: Set up environment with Volta
-        uses: volta-cli/action@v4
+      - uses: volta-cli/action@v4
 
       - name: Bump
         id: release
