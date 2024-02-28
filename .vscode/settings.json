@@ -1,5 +1,15 @@
 {
-  "files.insertFinalNewline": true,
-  "svelte.enable-ts-plugin": true,
-  "eslint.workingDirectories": ["./src"]
+	"editor.insertSpaces": false,
+	"files.insertFinalNewline": true,
+	"svelte.enable-ts-plugin": true,
+	"eslint.workingDirectories": ["./src"],
+	"eslint.enable": true,
+	"eslint.validate": ["javascript", "svelte", "typescript"],
+	"stylelint.enable": true,
+	"stylelint.validate": ["css", "svelte"],
+	"editor.formatOnSave": true,
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": "explicit",
+		"source.fixAll.stylelint": "explicit"
+	}
 }

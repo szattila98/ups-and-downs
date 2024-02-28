@@ -1,0 +1,23 @@
+{
+	"extends": [
+		"stylelint-config-recommended",
+		"stylelint-config-recommended-scss",
+		"stylelint-prettier/recommended"
+	],
+	"plugins": ["stylelint-order"],
+	"overrides": [
+		{
+			"files": ["**/*.svelte"],
+			"customSyntax": "postcss-html"
+		}
+	],
+	"rules": {
+		"order/properties-alphabetical-order": true,
+		"selector-class-pattern": null,
+		"scss/dollar-variable-empty-line-before": null,
+		"scss/at-import-no-partial-leading-underscore": null,
+		"shorthand-property-no-redundant-values": null,
+		"no-descending-specificity": null,
+		"scss/load-no-partial-leading-underscore": null
+	}
+}
