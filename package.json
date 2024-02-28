@@ -1,30 +1,68 @@
 {
-  "name": "ups-and-downs",
-  "private": true,
-  "version": "0.0.1",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
-    "check": "svelte-check --tsconfig ./tsconfig.json",
-    "tauri": "tauri"
-  },
-  "dependencies": {
-    "@tauri-apps/api": "^1.5.2"
-  },
-  "devDependencies": {
-    "@sveltejs/vite-plugin-svelte": "^3.0.1",
-    "@tauri-apps/cli": "^1.5.8",
-    "@tsconfig/svelte": "^5.0.2",
-    "svelte": "^4.2.8",
-    "svelte-check": "^3.4.6",
-    "tslib": "^2.6.0",
-    "typescript": "^5.0.2",
-    "vite": "^5.0.0"
-  },
-  "volta": {
-    "node": "20.11.1",
-    "yarn": "4.1.0"
-  }
+	"name": "ups-and-downs",
+	"private": true,
+	"version": "0.0.1",
+	"type": "module",
+	"scripts": {
+		"dev": "vite",
+		"build": "vite build",
+		"preview": "vite preview",
+		"tauri": "tauri",
+		"check": "svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
+		"lint": "run-p 'lint:*'",
+		"lint:prettier": "prettier --check .",
+		"lint:script": "eslint .",
+		"lint:style": "stylelint \"src/**/*.{css,svelte}\"",
+		"format": "prettier --write .",
+		"test": "run-s test:unit test:e2e",
+		"test:unit": "vitest --typecheck.enabled run",
+		"test:unit:watch": "vitest --typecheck.enabled --coverage false",
+		"test:unit:ui": "vitest --ui",
+		"test:e2e": "playwright test",
+		"test:e2e:ui": "playwright test --ui",
+		"analyse": "npx -y vite-bundle-visualizer",
+		"clean": "rm -rf node_modules",
+		"clean:all": "rm -rf node_modules .yarn dist yarn.lock"
+	},
+	"dependencies": {
+		"@tauri-apps/api": "^1.5.2"
+	},
+	"devDependencies": {
+		"@playwright/test": "^1.42.0",
+		"@sveltejs/vite-plugin-svelte": "^3.0.1",
+		"@tauri-apps/cli": "^1.5.8",
+		"@tsconfig/svelte": "^5.0.2",
+		"@types/eslint": "8.56.4",
+		"@types/node": "^20.11.22",
+		"@typescript-eslint/eslint-plugin": "7.1.0",
+		"@typescript-eslint/parser": "7.1.0",
+		"@vitest/coverage-v8": "^1.3.1",
+		"@vitest/ui": "^1.3.1",
+		"eslint": "8.57.0",
+		"eslint-config-prettier": "9.1.0",
+		"eslint-plugin-prettier": "5.1.3",
+		"eslint-plugin-svelte": "2.35.1",
+		"jsdom": "^24.0.0",
+		"npm-run-all2": "6.1.2",
+		"postcss": "8.4.35",
+		"postcss-html": "1.6.0",
+		"prettier": "3.2.5",
+		"prettier-plugin-svelte": "3.2.2",
+		"stylelint": "^16.2.1",
+		"stylelint-config-recommended": "14.0.0",
+		"stylelint-config-recommended-scss": "14.0.0",
+		"stylelint-order": "6.0.4",
+		"stylelint-prettier": "5.0.0",
+		"svelte": "^4.2.8",
+		"svelte-check": "3.6.5",
+		"tslib": "^2.6.0",
+		"typescript": "^5.0.2",
+		"vite": "^5.0.0",
+		"vitest": "1.3.1"
+	},
+	"volta": {
+		"node": "20.11.1",
+		"yarn": "4.1.0"
+	}
 }
