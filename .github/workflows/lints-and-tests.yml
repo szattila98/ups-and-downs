@@ -21,9 +21,9 @@ jobs:
             - name: Check commits
               uses: cocogitto/cocogitto-action@v3
 
-    client-checks:
+    frontend-checks:
         runs-on: ubuntu-latest
-        name: Client checks
+        name: Frontend checks
         needs: [commit-check]
         steps:
             - uses: actions/checkout@v4
@@ -32,15 +32,15 @@ jobs:
 
             - run: yarn install --immutable
 
-            - name: Client check
+            - name: Frontend check
               run: yarn check
 
-            - name: Client lint
+            - name: Frontend lint
               run: yarn lint
 
             - run: yarn playwright install --with-deps
 
-            - name: Client test
+            - name: Frontend test
               run: yarn test
 
             - uses: actions/upload-artifact@v3
@@ -50,9 +50,9 @@ jobs:
                   path: playwright-report/
                   retention-days: 30
 
-    server-checks:
+    backend-checks:
         runs-on: ubuntu-latest
-        name: Server checks
+        name: Backend checks
         needs: [commit-check]
         steps:
             - uses: actions/checkout@v4
@@ -69,13 +69,13 @@ jobs:
                   packages: libwebkit2gtk-4.0-dev build-essential curl wget file libssl-dev libgtk-3-dev libayatana-appindicator3-dev librsvg2-dev
                   version: 1.0
 
-            - name: Server check
+            - name: Backend check
               run: cargo check --manifest-path src-tauri/Cargo.toml
 
-            - name: Server lint
+            - name: Backend lint
               run: |
                   cargo fmt --manifest-path src-tauri/Cargo.toml --all -- --check
                   cargo clippy --manifest-path src-tauri/Cargo.toml -- -D warnings
 
-            - name: Server test
+            - name: Backend test
               run: cargo test --manifest-path src-tauri/Cargo.toml
