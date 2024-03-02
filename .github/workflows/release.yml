@@ -17,7 +17,7 @@ jobs:
               with:
                   ref: ${{ github.sha }}
                   repo-token: ${{ secrets.GITHUB_TOKEN }}
-                  check-name: 'Lints and tests'
+                  check-name: 'Backend checks'
 
             - uses: actions/checkout@v4
               with:
