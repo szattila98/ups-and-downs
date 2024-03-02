@@ -21,9 +21,9 @@ jobs:
             - name: Check commits
               uses: cocogitto/cocogitto-action@v3
 
-    client-checks:
+    frontend-checks:
         runs-on: ubuntu-latest
-        name: Client checks
+        name: Frontend checks
         needs: [commit-check]
         steps:
             - uses: actions/checkout@v4
@@ -50,9 +50,9 @@ jobs:
                   path: playwright-report/
                   retention-days: 30
 
-    server-checks:
+    backend-checks:
         runs-on: ubuntu-latest
-        name: Server checks
+        name: Backend checks
         needs: [commit-check]
         steps:
             - uses: actions/checkout@v4
