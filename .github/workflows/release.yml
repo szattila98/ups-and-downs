@@ -17,9 +17,9 @@ jobs:
               with:
                   ref: ${{ github.sha }}
                   repo-token: ${{ secrets.GITHUB_TOKEN }}
-                  check-name: 'Check conventional commit compliance'
+                  check-name: 'Lints and tests'
 
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
               with:
                   fetch-depth: 0
             - run: |
