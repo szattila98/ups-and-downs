@@ -8,6 +8,7 @@ node_modules
 
 /src-tauri
 /dist
+src/bindings.ts
 
 # Ignore files for PNPM, NPM and YARN
 pnpm-lock.yaml

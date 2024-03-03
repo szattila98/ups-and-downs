@@ -492,14 +492,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@playwright/test@npm:^1.42.0":
-  version: 1.42.0
-  resolution: "@playwright/test@npm:1.42.0"
+"@playwright/test@npm:1.42.1":
+  version: 1.42.1
+  resolution: "@playwright/test@npm:1.42.1"
   dependencies:
-    playwright: "npm:1.42.0"
+    playwright: "npm:1.42.1"
   bin:
     playwright: cli.js
-  checksum: 10c0/1505544fd4962cc9463c2e0d21958507b4b23ecb835ef19d81a97ae01cda9030585dc321263486cce4d1eac53724615b7b3ec41a94b6c1a54a2b7ed01157de60
+  checksum: 10c0/e5d7c1ffedabb934643edb010038edcb70d51d224fb6444844a854d94365a6179d4407a83da176cae37ccd42b62c148843e0b6f9b4c6506048e06558c00d4267
   languageName: node
   linkType: hard
 
@@ -621,7 +621,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sveltejs/vite-plugin-svelte@npm:^3.0.1":
+"@sveltejs/vite-plugin-svelte@npm:3.0.2":
   version: 3.0.2
   resolution: "@sveltejs/vite-plugin-svelte@npm:3.0.2"
   dependencies:
@@ -639,97 +639,97 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tauri-apps/api@npm:^1.5.2":
+"@tauri-apps/api@npm:1.5.3":
   version: 1.5.3
   resolution: "@tauri-apps/api@npm:1.5.3"
   checksum: 10c0/7709c368603881d1f615eb334261339b55f479e44af112702ce42e65a7bf1cfd48e95a7ad3efec9d275d78c09af43fe0b7c3acffc7cef6a14a470a457b807272
   languageName: node
   linkType: hard
 
-"@tauri-apps/cli-darwin-arm64@npm:1.5.9":
-  version: 1.5.9
-  resolution: "@tauri-apps/cli-darwin-arm64@npm:1.5.9"
+"@tauri-apps/cli-darwin-arm64@npm:1.5.10":
+  version: 1.5.10
+  resolution: "@tauri-apps/cli-darwin-arm64@npm:1.5.10"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@tauri-apps/cli-darwin-x64@npm:1.5.9":
-  version: 1.5.9
-  resolution: "@tauri-apps/cli-darwin-x64@npm:1.5.9"
+"@tauri-apps/cli-darwin-x64@npm:1.5.10":
+  version: 1.5.10
+  resolution: "@tauri-apps/cli-darwin-x64@npm:1.5.10"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@tauri-apps/cli-linux-arm-gnueabihf@npm:1.5.9":
-  version: 1.5.9
-  resolution: "@tauri-apps/cli-linux-arm-gnueabihf@npm:1.5.9"
+"@tauri-apps/cli-linux-arm-gnueabihf@npm:1.5.10":
+  version: 1.5.10
+  resolution: "@tauri-apps/cli-linux-arm-gnueabihf@npm:1.5.10"
   conditions: os=linux & cpu=arm
   languageName: node
   linkType: hard
 
-"@tauri-apps/cli-linux-arm64-gnu@npm:1.5.9":
-  version: 1.5.9
-  resolution: "@tauri-apps/cli-linux-arm64-gnu@npm:1.5.9"
+"@tauri-apps/cli-linux-arm64-gnu@npm:1.5.10":
+  version: 1.5.10
+  resolution: "@tauri-apps/cli-linux-arm64-gnu@npm:1.5.10"
   conditions: os=linux & cpu=arm64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@tauri-apps/cli-linux-arm64-musl@npm:1.5.9":
-  version: 1.5.9
-  resolution: "@tauri-apps/cli-linux-arm64-musl@npm:1.5.9"
+"@tauri-apps/cli-linux-arm64-musl@npm:1.5.10":
+  version: 1.5.10
+  resolution: "@tauri-apps/cli-linux-arm64-musl@npm:1.5.10"
   conditions: os=linux & cpu=arm64 & libc=musl
   languageName: node
   linkType: hard
 
-"@tauri-apps/cli-linux-x64-gnu@npm:1.5.9":
-  version: 1.5.9
-  resolution: "@tauri-apps/cli-linux-x64-gnu@npm:1.5.9"
+"@tauri-apps/cli-linux-x64-gnu@npm:1.5.10":
+  version: 1.5.10
+  resolution: "@tauri-apps/cli-linux-x64-gnu@npm:1.5.10"
   conditions: os=linux & cpu=x64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@tauri-apps/cli-linux-x64-musl@npm:1.5.9":
-  version: 1.5.9
-  resolution: "@tauri-apps/cli-linux-x64-musl@npm:1.5.9"
+"@tauri-apps/cli-linux-x64-musl@npm:1.5.10":
+  version: 1.5.10
+  resolution: "@tauri-apps/cli-linux-x64-musl@npm:1.5.10"
   conditions: os=linux & cpu=x64 & libc=musl
   languageName: node
   linkType: hard
 
-"@tauri-apps/cli-win32-arm64-msvc@npm:1.5.9":
-  version: 1.5.9
-  resolution: "@tauri-apps/cli-win32-arm64-msvc@npm:1.5.9"
+"@tauri-apps/cli-win32-arm64-msvc@npm:1.5.10":
+  version: 1.5.10
+  resolution: "@tauri-apps/cli-win32-arm64-msvc@npm:1.5.10"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-"@tauri-apps/cli-win32-ia32-msvc@npm:1.5.9":
-  version: 1.5.9
-  resolution: "@tauri-apps/cli-win32-ia32-msvc@npm:1.5.9"
+"@tauri-apps/cli-win32-ia32-msvc@npm:1.5.10":
+  version: 1.5.10
+  resolution: "@tauri-apps/cli-win32-ia32-msvc@npm:1.5.10"
   conditions: os=win32 & cpu=ia32
   languageName: node
   linkType: hard
 
-"@tauri-apps/cli-win32-x64-msvc@npm:1.5.9":
-  version: 1.5.9
-  resolution: "@tauri-apps/cli-win32-x64-msvc@npm:1.5.9"
+"@tauri-apps/cli-win32-x64-msvc@npm:1.5.10":
+  version: 1.5.10
+  resolution: "@tauri-apps/cli-win32-x64-msvc@npm:1.5.10"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
 
-"@tauri-apps/cli@npm:^1.5.8":
-  version: 1.5.9
-  resolution: "@tauri-apps/cli@npm:1.5.9"
+"@tauri-apps/cli@npm:1.5.10":
+  version: 1.5.10
+  resolution: "@tauri-apps/cli@npm:1.5.10"
   dependencies:
-    "@tauri-apps/cli-darwin-arm64": "npm:1.5.9"
-    "@tauri-apps/cli-darwin-x64": "npm:1.5.9"
-    "@tauri-apps/cli-linux-arm-gnueabihf": "npm:1.5.9"
-    "@tauri-apps/cli-linux-arm64-gnu": "npm:1.5.9"
-    "@tauri-apps/cli-linux-arm64-musl": "npm:1.5.9"
-    "@tauri-apps/cli-linux-x64-gnu": "npm:1.5.9"
-    "@tauri-apps/cli-linux-x64-musl": "npm:1.5.9"
-    "@tauri-apps/cli-win32-arm64-msvc": "npm:1.5.9"
-    "@tauri-apps/cli-win32-ia32-msvc": "npm:1.5.9"
-    "@tauri-apps/cli-win32-x64-msvc": "npm:1.5.9"
+    "@tauri-apps/cli-darwin-arm64": "npm:1.5.10"
+    "@tauri-apps/cli-darwin-x64": "npm:1.5.10"
+    "@tauri-apps/cli-linux-arm-gnueabihf": "npm:1.5.10"
+    "@tauri-apps/cli-linux-arm64-gnu": "npm:1.5.10"
+    "@tauri-apps/cli-linux-arm64-musl": "npm:1.5.10"
+    "@tauri-apps/cli-linux-x64-gnu": "npm:1.5.10"
+    "@tauri-apps/cli-linux-x64-musl": "npm:1.5.10"
+    "@tauri-apps/cli-win32-arm64-msvc": "npm:1.5.10"
+    "@tauri-apps/cli-win32-ia32-msvc": "npm:1.5.10"
+    "@tauri-apps/cli-win32-x64-msvc": "npm:1.5.10"
   dependenciesMeta:
     "@tauri-apps/cli-darwin-arm64":
       optional: true
@@ -753,24 +753,24 @@ __metadata:
       optional: true
   bin:
     tauri: tauri.js
-  checksum: 10c0/511fbe90e0bad09ca29a803d833b2fb31c02f87fdd13946390dae129142119fd22b21111d90e21a288f0bc3c99c26e7163f1ec06c7ef460419ffd121d8a91495
+  checksum: 10c0/c67198c99cda24191d750daaff331a26ed374332d0a858ff4d934db076b2e51cceb20c2e66b1eec74b1adf9180e009a2bc7f4b069d09647b1b996db80b92cbe1
   languageName: node
   linkType: hard
 
-"@tsconfig/svelte@npm:^5.0.2":
+"@tsconfig/svelte@npm:5.0.2":
   version: 5.0.2
   resolution: "@tsconfig/svelte@npm:5.0.2"
   checksum: 10c0/575a8cb9379f9a99ff8142b4b5b5045ab535992c9e509f2aa6d604e4b4f19d1af2b60edea088958b2a37d78851470ad82aa60fbbb520bc6f808dcb0dc66dd8cd
   languageName: node
   linkType: hard
 
-"@types/eslint@npm:8.56.4":
-  version: 8.56.4
-  resolution: "@types/eslint@npm:8.56.4"
+"@types/eslint@npm:8.56.5":
+  version: 8.56.5
+  resolution: "@types/eslint@npm:8.56.5"
   dependencies:
     "@types/estree": "npm:*"
     "@types/json-schema": "npm:*"
-  checksum: 10c0/c2a7dd579d71e463cbc627248969878ac28b5a5b117b54f44939ee646eeec3e3d2b3a4e0061d3d7fab9d84cef302e3744f3d746e29fc86fb10a48b95b11fa5e9
+  checksum: 10c0/1d5d70ea107c63adfaf63020f85859c404f90c21ada2a655376b8e76109df354643797e30c7afc3b2de84797d9f5ce9f03f53a5d29a186706a44afd90f76597c
   languageName: node
   linkType: hard
 
@@ -795,12 +795,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^20.11.22":
-  version: 20.11.22
-  resolution: "@types/node@npm:20.11.22"
+"@types/node@npm:20.11.24":
+  version: 20.11.24
+  resolution: "@types/node@npm:20.11.24"
   dependencies:
     undici-types: "npm:~5.26.4"
-  checksum: 10c0/304a25607108cbc314417ba1cd0ca7061090cf9444c13f4a70c183164dc189d0e3f4cfda12619c85e5f0fc7a652e3b32501fd0e347b8425dbd5a66c3ec85c7a6
+  checksum: 10c0/5a62225eb4797b41e6953f9c08c4611d607b5422ddd153312fc81ed6ed37115228ae27e3e3caa1a3bf52d88310306a196ba1cfbd8b2ec918a20f64d80dfa22c9
   languageName: node
   linkType: hard
 
@@ -948,7 +948,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitest/coverage-v8@npm:^1.3.1":
+"@vitest/coverage-v8@npm:1.3.1":
   version: 1.3.1
   resolution: "@vitest/coverage-v8@npm:1.3.1"
   dependencies:
@@ -1013,7 +1013,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitest/ui@npm:^1.3.1":
+"@vitest/ui@npm:1.3.1":
   version: 1.3.1
   resolution: "@vitest/ui@npm:1.3.1"
   dependencies:
@@ -2720,7 +2720,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jsdom@npm:^24.0.0":
+"jsdom@npm:24.0.0":
   version: 24.0.0
   resolution: "jsdom@npm:24.0.0"
   dependencies:
@@ -3520,27 +3520,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"playwright-core@npm:1.42.0":
-  version: 1.42.0
-  resolution: "playwright-core@npm:1.42.0"
+"playwright-core@npm:1.42.1":
+  version: 1.42.1
+  resolution: "playwright-core@npm:1.42.1"
   bin:
     playwright-core: cli.js
-  checksum: 10c0/f08700ec743734247a0e025249ccaf1f58beb95b5c8ef6a4319f636db83ea668222967ae10299114e9f4725318f80185c7c7d97fe051ebd617acec5ae67af31a
+  checksum: 10c0/9bb0be6defa32eb1b01429615f10c2ad17dcf701656c081a250369c1eb3b0dcc2a0ee21188cd653cdd2303ca73ff94df0d270b178fe3897eba274793dab368ce
   languageName: node
   linkType: hard
 
-"playwright@npm:1.42.0":
-  version: 1.42.0
-  resolution: "playwright@npm:1.42.0"
+"playwright@npm:1.42.1":
+  version: 1.42.1
+  resolution: "playwright@npm:1.42.1"
   dependencies:
     fsevents: "npm:2.3.2"
-    playwright-core: "npm:1.42.0"
+    playwright-core: "npm:1.42.1"
   dependenciesMeta:
     fsevents:
       optional: true
   bin:
     playwright: cli.js
-  checksum: 10c0/4960431c89097d7a79a24d3d4e5896cd9e4253dacfdf2891ed8a32f31c6f665a3df9af636baa23a93382733667a4d997afadb6148e6ba71f42202eeafc8968b7
+  checksum: 10c0/91dcbfe92d75ca9eb4bfff69bb1ec28007b5a96f6187f48e52aa0f6acf8c24f6039ed6467c152964cc92f4ab64b85dc665b13c52b2fb9f7b9182ddb9db404e37
   languageName: node
   linkType: hard
 
@@ -4260,7 +4260,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"stylelint@npm:^16.2.1":
+"stylelint@npm:16.2.1":
   version: 16.2.1
   resolution: "stylelint@npm:16.2.1"
   dependencies:
@@ -4336,9 +4336,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"svelte-check@npm:3.6.5":
-  version: 3.6.5
-  resolution: "svelte-check@npm:3.6.5"
+"svelte-check@npm:3.6.6":
+  version: 3.6.6
+  resolution: "svelte-check@npm:3.6.6"
   dependencies:
     "@jridgewell/trace-mapping": "npm:^0.3.17"
     chokidar: "npm:^3.4.1"
@@ -4346,13 +4346,13 @@ __metadata:
     import-fresh: "npm:^3.2.1"
     picocolors: "npm:^1.0.0"
     sade: "npm:^1.7.4"
-    svelte-preprocess: "npm:^5.1.0"
+    svelte-preprocess: "npm:^5.1.3"
     typescript: "npm:^5.0.3"
   peerDependencies:
     svelte: ^3.55.0 || ^4.0.0-next.0 || ^4.0.0 || ^5.0.0-next.0
   bin:
     svelte-check: bin/svelte-check
-  checksum: 10c0/0f6b7b9a7345c99ee51c7e961360ae2e42811fe579abb4539babf68ed4cc61d522c746e8ec0e899d93ca710ec40a99e1a745952c6ed34761135d542a80be04d3
+  checksum: 10c0/b97561f06726ce3233495e6ded0118fda0e91889c35708b35ad28918da1244182f5d39a827ec6cd73c138b634f3f15f4abf788224adef772b850c24d1c0f530b
   languageName: node
   linkType: hard
 
@@ -4383,7 +4383,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"svelte-preprocess@npm:^5.1.0":
+"svelte-preprocess@npm:^5.1.3":
   version: 5.1.3
   resolution: "svelte-preprocess@npm:5.1.3"
   dependencies:
@@ -4429,9 +4429,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"svelte@npm:^4.2.8":
-  version: 4.2.11
-  resolution: "svelte@npm:4.2.11"
+"svelte@npm:4.2.12":
+  version: 4.2.12
+  resolution: "svelte@npm:4.2.12"
   dependencies:
     "@ampproject/remapping": "npm:^2.2.1"
     "@jridgewell/sourcemap-codec": "npm:^1.4.15"
@@ -4447,7 +4447,7 @@ __metadata:
     locate-character: "npm:^3.0.0"
     magic-string: "npm:^0.30.4"
     periscopic: "npm:^3.1.0"
-  checksum: 10c0/deae0f302824b2955a6cb4da09ad98dac03c2aed201105eba3b2a82072b1068ed02d338c3795ad638d8ee6620bba0f6307847c7f42f6bb4d03c749d436cd96c8
+  checksum: 10c0/779e0515a2f7d67440e46ef82201072d531b33814ea2e24bef144637f8b22570611999dc68c3f5f2f056b68e980796116a7462eff7d29e57eb71d0893a6483e1
   languageName: node
   linkType: hard
 
@@ -4594,7 +4594,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:^2.6.0, tslib@npm:^2.6.2":
+"tslib@npm:2.6.2, tslib@npm:^2.6.2":
   version: 2.6.2
   resolution: "tslib@npm:2.6.2"
   checksum: 10c0/e03a8a4271152c8b26604ed45535954c0a45296e32445b4b87f8a5abdb2421f40b59b4ca437c4346af0f28179780d604094eb64546bee2019d903d01c6c19bdb
@@ -4624,7 +4624,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^5.0.2, typescript@npm:^5.0.3":
+"typescript@npm:5.3.3, typescript@npm:^5.0.3":
   version: 5.3.3
   resolution: "typescript@npm:5.3.3"
   bin:
@@ -4634,7 +4634,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A^5.0.2#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A^5.0.3#optional!builtin<compat/typescript>":
+"typescript@patch:typescript@npm%3A5.3.3#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A^5.0.3#optional!builtin<compat/typescript>":
   version: 5.3.3
   resolution: "typescript@patch:typescript@npm%3A5.3.3#optional!builtin<compat/typescript>::version=5.3.3&hash=e012d7"
   bin:
@@ -4687,38 +4687,38 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "ups-and-downs@workspace:."
   dependencies:
-    "@playwright/test": "npm:^1.42.0"
-    "@sveltejs/vite-plugin-svelte": "npm:^3.0.1"
-    "@tauri-apps/api": "npm:^1.5.2"
-    "@tauri-apps/cli": "npm:^1.5.8"
-    "@tsconfig/svelte": "npm:^5.0.2"
-    "@types/eslint": "npm:8.56.4"
-    "@types/node": "npm:^20.11.22"
+    "@playwright/test": "npm:1.42.1"
+    "@sveltejs/vite-plugin-svelte": "npm:3.0.2"
+    "@tauri-apps/api": "npm:1.5.3"
+    "@tauri-apps/cli": "npm:1.5.10"
+    "@tsconfig/svelte": "npm:5.0.2"
+    "@types/eslint": "npm:8.56.5"
+    "@types/node": "npm:20.11.24"
     "@typescript-eslint/eslint-plugin": "npm:7.1.0"
     "@typescript-eslint/parser": "npm:7.1.0"
-    "@vitest/coverage-v8": "npm:^1.3.1"
-    "@vitest/ui": "npm:^1.3.1"
+    "@vitest/coverage-v8": "npm:1.3.1"
+    "@vitest/ui": "npm:1.3.1"
     eslint: "npm:8.57.0"
     eslint-config-prettier: "npm:9.1.0"
     eslint-plugin-prettier: "npm:5.1.3"
     eslint-plugin-svelte: "npm:2.35.1"
-    jsdom: "npm:^24.0.0"
+    jsdom: "npm:24.0.0"
     npm-run-all2: "npm:6.1.2"
     postcss: "npm:8.4.35"
     postcss-html: "npm:1.6.0"
     prettier: "npm:3.2.5"
     prettier-plugin-svelte: "npm:3.2.2"
-    stylelint: "npm:^16.2.1"
+    stylelint: "npm:16.2.1"
     stylelint-config-recommended: "npm:14.0.0"
     stylelint-config-recommended-scss: "npm:14.0.0"
     stylelint-declaration-block-no-ignored-properties: "npm:2.8.0"
     stylelint-order: "npm:6.0.4"
     stylelint-prettier: "npm:5.0.0"
-    svelte: "npm:^4.2.8"
-    svelte-check: "npm:3.6.5"
-    tslib: "npm:^2.6.0"
-    typescript: "npm:^5.0.2"
-    vite: "npm:^5.0.0"
+    svelte: "npm:4.2.12"
+    svelte-check: "npm:3.6.6"
+    tslib: "npm:2.6.2"
+    typescript: "npm:5.3.3"
+    vite: "npm:5.1.4"
     vitest: "npm:1.3.1"
   languageName: unknown
   linkType: soft
@@ -4772,6 +4772,46 @@ __metadata:
   bin:
     vite-node: vite-node.mjs
   checksum: 10c0/b50665ef224f3527f856ab88a0cfabab36dd6e2dd1e3edca8f8f25d5d33754e1050495472c2c82147d0dcf7c5280971dae2f37a531c10f3941d8d3344e34ce0b
+  languageName: node
+  linkType: hard
+
+"vite@npm:5.1.4":
+  version: 5.1.4
+  resolution: "vite@npm:5.1.4"
+  dependencies:
+    esbuild: "npm:^0.19.3"
+    fsevents: "npm:~2.3.3"
+    postcss: "npm:^8.4.35"
+    rollup: "npm:^4.2.0"
+  peerDependencies:
+    "@types/node": ^18.0.0 || >=20.0.0
+    less: "*"
+    lightningcss: ^1.21.0
+    sass: "*"
+    stylus: "*"
+    sugarss: "*"
+    terser: ^5.4.0
+  dependenciesMeta:
+    fsevents:
+      optional: true
+  peerDependenciesMeta:
+    "@types/node":
+      optional: true
+    less:
+      optional: true
+    lightningcss:
+      optional: true
+    sass:
+      optional: true
+    stylus:
+      optional: true
+    sugarss:
+      optional: true
+    terser:
+      optional: true
+  bin:
+    vite: bin/vite.js
+  checksum: 10c0/8f04c8bed33f266bde27f432412456a3b893b51fe1857f0b8cd259100b376c1393a7927db1dd6344a4376baed72ed179ec5b0428aef2ae8508f1f28f95acb908
   languageName: node
   linkType: hard
 

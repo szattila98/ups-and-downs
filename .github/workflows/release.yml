@@ -12,7 +12,7 @@ jobs:
     release:
         runs-on: ubuntu-latest
         steps:
-            - name: Wait on conventinal commit compliance check
+            - name: Wait on checks
               uses: lewagon/wait-on-check-action@master
               with:
                   ref: ${{ github.sha }}
