@@ -11,16 +11,63 @@ edition = "2021"
 tauri-build = { version = "1.5", features = [] }
 
 [dependencies]
-tauri = { version = "1.6", features = ["shell-open"] }
+dirs = "5.0.1"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 specta = { version = "=2.0.0-rc.7", features = ["functions", "export"] }
-tauri-specta = { version = "=2.0.0-rc.4", features = [
-	"javascript",
-	"typescript",
+sqlx = { version = "0.7.3", features = [
+	"macros",
+	"migrate",
+	"runtime-tokio",
+	"sqlite",
+	"time",
+	"tls-rustls",
 ] }
+tauri = { version = "1.6", features = ["shell-open"] }
+tauri-specta = { version = "=2.0.0-rc.4", features = ["typescript"] }
+time = { version = "0.3.29", features = ["serde", "formatting", "macros"] }
+tokio = { version = "1.36.0", features = ["full"] }
+
 
 [features]
 # this feature is used for production builds or when `devPath` points to the filesystem
 # DO NOT REMOVE!!
 custom-protocol = ["tauri/custom-protocol"]
+
+[profile.dev.package.sqlx-macros]
+opt-level = 3
+
+[lints.rust]
+unsafe_code = "forbid"
+keyword_idents = "warn"
+non_ascii_idents = "warn"
+noop_method_call = "warn"
+unused_import_braces = "warn"
+
+[lints.clippy]
+cognitive_complexity = "warn"
+dbg_macro = "warn"
+debug_assert_with_mut_call = "warn"
+doc_link_with_quotes = "warn"
+doc_markdown = "warn"
+empty_line_after_outer_attr = "warn"
+empty_structs_with_brackets = "warn"
+float_cmp = "warn"
+float_cmp_const = "warn"
+float_equality_without_abs = "warn"
+missing_const_for_fn = "warn"
+mod_module_files = "warn"
+option_if_let_else = "warn"
+print_stderr = "warn"
+print_stdout = "warn"
+semicolon_if_nothing_returned = "warn"
+unseparated_literal_suffix = "warn"
+shadow_unrelated = "warn"
+similar_names = "warn"
+suspicious_operation_groupings = "warn"
+unused_self = "warn"
+use_debug = "warn"
+used_underscore_binding = "warn"
+useless_let_if_seq = "warn"
+wildcard_dependencies = "warn"
+wildcard_imports = "warn"
