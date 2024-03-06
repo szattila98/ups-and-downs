@@ -2,22 +2,15 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 use db::DbWrapper;
-use tauri::State;
 use tokio::runtime::Runtime;
 
 mod db;
-
-// Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-#[tauri::command]
-#[specta::specta]
-fn greet(state: State<'_, DbWrapper>, name: &str) -> String {
-    format!("Hello, {}! You've been greeted from Rust!", name)
-}
+mod highlight;
 
 fn main() {
     let specta_builder = {
-        let specta_builder =
-            tauri_specta::ts::builder().commands(tauri_specta::collect_commands![greet]);
+        let specta_builder = tauri_specta::ts::builder()
+            .commands(tauri_specta::collect_commands![highlight::record_highlight]);
 
         #[cfg(debug_assertions)]
         let specta_builder = specta_builder.path("../src/bindings.ts");
