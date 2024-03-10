@@ -1,5 +1,5 @@
 use serde::{Deserialize, Serialize};
-use tauri::State;
+use tauri::{async_runtime::block_on, State};
 use time::OffsetDateTime;
 
 use crate::db::DbWrapper;
@@ -29,11 +29,8 @@ pub struct CreateHighlightRequest {
 
 #[tauri::command]
 #[specta::specta]
-pub async fn record_highlight(
-    state: State<'_, DbWrapper>,
-    req: CreateHighlightRequest,
-) -> Result<(), ()> {
-    match sqlx::query_as!(
+pub fn record_highlight(state: State<'_, DbWrapper>, req: CreateHighlightRequest) {
+    let future = sqlx::query_as!(
         Highlight,
         r#"
             INSERT INTO highlight ( content, kind ) 
@@ -42,10 +39,23 @@ pub async fn record_highlight(
         req.content,
         req.kind
     )
-    .execute(&state.pool)
-    .await
-    {
-        Ok(_) => Ok(()),
-        Err(_) => Err(()),
-    }
+    .execute(&state.pool);
+    block_on(future).expect("error while saving highlight to database");
+}
+
+#[tauri::command]
+#[specta::specta]
+pub fn has_recorded_today(state: State<'_, DbWrapper>) -> bool {
+    let future = sqlx::query!(
+        r#"
+            SELECT EXISTS (
+                SELECT 1 FROM highlight WHERE date(created_at) = date(CURRENT_DATE)
+            ) AS "exists!";
+        "#,
+    )
+    .fetch_one(&state.pool);
+    block_on(future)
+        .expect("error while checking if use has recorded today in database")
+        .exists
+        == 1
 }

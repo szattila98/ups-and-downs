@@ -1,0 +1,20 @@
+{
+  "db_name": "SQLite",
+  "query": "\n            SELECT EXISTS (\n                SELECT 1 FROM highlight WHERE date(created_at) = date(CURRENT_DATE)\n            ) AS \"exists!\";\n        ",
+  "describe": {
+    "columns": [
+      {
+        "name": "exists!",
+        "ordinal": 0,
+        "type_info": "Int"
+      }
+    ],
+    "parameters": {
+      "Right": 0
+    },
+    "nullable": [
+      null
+    ]
+  },
+  "hash": "3a406c25d10e7a0463fe1c246fed880cd07d2d65a698a4e65d3f2ff50005d13a"
+}

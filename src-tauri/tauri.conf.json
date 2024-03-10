@@ -6,8 +6,7 @@
     "distDir": "../dist"
   },
   "package": {
-    "productName": "ups-and-downs",
-    "version": "0.0.0"
+    "productName": "ups-and-downs"
   },
   "tauri": {
     "allowlist": {
@@ -15,6 +14,12 @@
       "shell": {
         "all": false,
         "open": true
+      },
+      "process": {
+        "all": false,
+        "exit": true,
+        "relaunch": false,
+        "relaunchDangerousAllowSymlinkMacos": false
       }
     },
     "windows": [
