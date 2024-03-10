@@ -29,6 +29,7 @@ module.exports = {
 		}
 	],
 	rules: {
+		'prettier/prettier': 'warn',
 		complexity: ['error', 8],
 		'prefer-const': 'error'
 	}

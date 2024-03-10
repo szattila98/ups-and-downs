@@ -1,34 +1,22 @@
 <script lang="ts">
-	import { commands } from '../bindings';
+	import { createEventDispatcher } from 'svelte';
+	import type { DailyHighlight } from '../types';
 
-	interface DailyRecord {
-		best: string | null;
-		worst: string | null;
-	}
-
-	const model: DailyRecord = {
+	const model: DailyHighlight = {
 		best: null,
 		worst: null
 	};
 
-	const submit = async () => {
-		const promises: ReturnType<typeof commands.recordHighlight>[] = [];
-		if (model.best) {
-			promises.push(commands.recordHighlight({ content: model.best, kind: 'BEST' }));
-		}
-		if (model.worst) {
-			promises.push(commands.recordHighlight({ content: model.worst, kind: 'WORST' }));
-		}
-		await Promise.all(promises);
-	};
+	const dispatch = createEventDispatcher<{ submit: DailyHighlight; toMenu: null }>();
 
-	$: disabled = !model.best && !model.worst;
+	$: submitDisabled = !model.best && !model.worst;
 </script>
 
-<form on:submit={submit}>
+<button on:click={() => dispatch('toMenu')}>Back to menu</button>
+<form on:submit|preventDefault={() => dispatch('submit', model)}>
 	<h1>Best</h1>
 	<input type="text" bind:value={model.best} maxlength="2000" />
 	<h1>Worst</h1>
 	<input type="text" bind:value={model.worst} maxlength="2000" />
-	<button type="submit" {disabled}>Submit</button>
+	<button type="submit" disabled={submitDisabled}>Submit</button>
 </form>
