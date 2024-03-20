@@ -1,0 +1,21 @@
+@import './fonts.css';
+
+:root {
+	--primary: #f8fff4;
+	--secondary: #f39b6d;
+	--highlight: #7c98b3;
+	--light: #fcffeb;
+	--dark: #474350;
+	--very-dark: black;
+}
+
+* {
+	font-family: 'Montserrat', sans-serif;
+	font-optical-sizing: auto;
+	font-style: normal;
+	font-weight: normal;
+}
+
+body {
+	background-color: var(--primary);
+}

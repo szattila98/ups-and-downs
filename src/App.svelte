@@ -44,6 +44,8 @@
 		await init();
 		state = AppState.Menu;
 	};
+
+	const toMenu = () => (state = AppState.Menu);
 </script>
 
 {#if state === AppState.Menu}
@@ -53,7 +55,7 @@
 		on:exit={async () => await exit(0)}
 	/>
 {:else if state === AppState.Record}
-	<Record on:submit={newHighlight} on:toMenu={() => (state = AppState.Menu)} />
+	<Record on:submit={newHighlight} on:toMenu={toMenu} />
 {:else if state === AppState.List}
-	<List />
+	<List on:toMenu={toMenu} />
 {/if}
