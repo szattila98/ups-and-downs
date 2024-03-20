@@ -25,10 +25,10 @@
     "windows": [
       {
         "fullscreen": false,
-        "resizable": true,
-        "title": "ups-and-downs",
-        "width": 800,
-        "height": 600
+        "resizable": false,
+        "title": "Ups & Downs",
+        "width": 300,
+        "height": 500
       }
     ],
     "security": {

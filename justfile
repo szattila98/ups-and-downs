@@ -16,3 +16,6 @@ add-git-hook:
     # Adding Cocogitto hook to local repository
     @just _check-app cog
     @cog install-hook pre-push
+
+watch:
+    @yarn && yarn tauri dev
