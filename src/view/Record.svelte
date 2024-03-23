@@ -102,12 +102,14 @@
 			kind === HighlightKind.WORST ? $todaysHighlight.worst : $todaysHighlight.best}
 		<div class="todays-highlights">
 			<ul>
-				<li
-					style={`background-color: #${randomColor(kind === HighlightKind.WORST ? 'dark' : 'light')};
-					color: ${kind === HighlightKind.WORST ? 'var(--light)' : 'var(--very-dark)'}`}
-				>
-					{highlights?.content}
-				</li>
+				{#each highlights as highlight}
+					<li
+						style={`background-color: #${randomColor(kind === HighlightKind.WORST ? 'dark' : 'light')};
+						 color: ${kind === HighlightKind.WORST ? 'var(--light)' : 'var(--very-dark)'}`}
+					>
+						{highlight?.content}
+					</li>
+				{/each}
 			</ul>
 		</div>
 	{/if}
@@ -210,8 +212,17 @@
 			padding-left: 24px;
 
 			& li {
-				border-radius: 8px;
 				padding: 8px;
+			}
+
+			& li:first-of-type {
+				border-top-left-radius: 8px;
+				border-top-right-radius: 8px;
+			}
+
+			& li:last-of-type {
+				border-bottom-left-radius: 8px;
+				border-bottom-right-radius: 8px;
 			}
 
 			& li::marker {

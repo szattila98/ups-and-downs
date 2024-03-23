@@ -22,24 +22,28 @@
 				<span class="highlight-date" title={dayjs(highlight.date).format('LLL')}>
 					{dayjs(highlight.date).fromNow()}
 				</span>
-				<div class="highlight-container">
-					<div
-						class="highlight-best"
-						style={`background-color: #${randomColor('light')};`}
-					>
-						<ul>
-							<li><RandomEmoji emojis={happyEmojis} />{highlight.best?.content}</li>
-						</ul>
-					</div>
-					<div
-						class="highlight-worst"
-						style={`background-color: #${randomColor('dark')};`}
-					>
-						<ul>
-							<li><RandomEmoji emojis={sadEmojis} />{highlight.worst?.content}</li>
-						</ul>
-					</div>
-				</div>
+				<ul class="highlight-container">
+					{#each highlight.best as best, index}
+						<li
+							class="highlight-best"
+							style={`background-color: #${randomColor('light')};`}
+							data-last={highlight.best.length === index + 1 &&
+								!!highlight.worst.length}
+						>
+							<RandomEmoji emojis={happyEmojis} />
+							<span>{best?.content}</span>
+						</li>
+					{/each}
+					{#each highlight.worst as worst}
+						<li
+							class="highlight-worst"
+							style={`background-color: #${randomColor('dark')};`}
+						>
+							<RandomEmoji emojis={sadEmojis} />
+							<span>{worst?.content}</span>
+						</li>
+					{/each}
+				</ul>
 			</div>
 		{:else}
 			<p>No highlights to list yet!</p>
@@ -64,35 +68,38 @@
 		}
 
 		& .highlight-container {
-			display: flex;
-			flex-direction: column;
-			justify-content: center;
-			width: 100%;
+			font-size: small;
+			margin: 0;
+			padding-left: 0;
 
-			& div[class^='highlight-'] {
-				font-size: small;
+			& li {
+				align-items: center;
+				display: flex;
+				gap: 4px;
 
-				& ul {
-					list-style-type: none;
-					margin: 8px;
-					padding-left: 4px;
-
-					& li {
-						align-items: center;
-						display: flex;
-						gap: 4px;
-					}
+				& * {
+					margin: 4px;
 				}
 			}
 
-			& .highlight-best {
+			& li:first-of-type {
 				border-top-right-radius: 8px;
+			}
+
+			& li:last-of-type {
+				border-bottom-left-radius: 8px;
+				border-bottom-right-radius: 8px;
+			}
+
+			& li[data-last='true'] {
+				border-bottom: 2px solid var(--highlight);
+			}
+
+			& .highlight-best {
 				color: var(--very-dark);
 			}
 
 			& .highlight-worst {
-				border-bottom-left-radius: 8px;
-				border-bottom-right-radius: 8px;
 				color: var(--light);
 			}
 		}

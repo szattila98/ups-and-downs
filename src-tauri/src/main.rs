@@ -22,10 +22,9 @@ fn main() {
         specta_builder.into_plugin()
     };
 
-    let subscriber = tracing_subscriber::FmtSubscriber::builder()
+    tracing_subscriber::FmtSubscriber::builder()
         .with_max_level(Level::INFO)
-        .finish();
-    tracing::subscriber::set_global_default(subscriber).expect("setting default subscriber failed");
+        .init();
 
     tauri::Builder::default()
         .setup(|app| {

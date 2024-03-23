@@ -10,5 +10,6 @@
 		gap: 8px;
 		margin-left: 8px;
 		margin-right: 8px;
+		padding-bottom: 8px;
 	}
 </style>
