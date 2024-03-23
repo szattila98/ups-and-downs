@@ -6,14 +6,17 @@
 	import List from './view/List.svelte';
 	import { todaysHighlight } from './store';
 	import { exit } from '@tauri-apps/api/process';
+	import Spinner from './lib/components/Spinner.svelte';
+	import { fade } from 'svelte/transition';
 
 	enum AppState {
+		Loading,
 		Menu,
 		Record,
 		List
 	}
 
-	let state: AppState = AppState.Menu;
+	let state: AppState = AppState.Loading;
 
 	const init = async () => {
 		const result = await commands.getTodaysHighlight();
@@ -36,7 +39,11 @@
 	const toMenu = () => (state = AppState.Menu);
 </script>
 
-{#if state === AppState.Menu}
+{#if state === AppState.Loading}
+	<div class="loader">
+		<Spinner />
+	</div>
+{:else if state === AppState.Menu}
 	<Menu
 		on:toNew={() => (state = AppState.Record)}
 		on:toList={() => (state = AppState.List)}
@@ -47,3 +54,12 @@
 {:else if state === AppState.List}
 	<List on:toMenu={toMenu} />
 {/if}
+
+<style scoped>
+	.loader {
+		align-items: center;
+		display: flex;
+		height: 90vh;
+		justify-content: center;
+	}
+</style>

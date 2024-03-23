@@ -28,7 +28,6 @@
 	"dependencies": {
 		"@tauri-apps/api": "1.5.3",
 		"dayjs": "1.11.10",
-		"svelte-icons": "2.1.0",
 		"ts-toolbelt": "^9.6.0"
 	},
 	"devDependencies": {
