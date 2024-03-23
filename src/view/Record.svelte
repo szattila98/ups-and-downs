@@ -2,7 +2,6 @@
 	import { createEventDispatcher } from 'svelte';
 	import ViewHeader from '@/lib/layouts/ViewHeader.svelte';
 	import ViewMain from '@/lib/layouts/ViewMain.svelte';
-	import FaPlus from 'svelte-icons/fa/FaPlus.svelte';
 	import type { CreateHighlightRequest } from '@/bindings';
 	import type { Nullable } from 'ts-toolbelt/out/Object/Nullable';
 	import RandomEmoji from '@/lib/components/RandomEmoji.svelte';
@@ -31,19 +30,18 @@
 		[HighlightKind.BEST]: { content: null, kind: HighlightKind.BEST }
 	};
 
-	$: submitDisabled = kind === 'WORST' ? !model['WORST'].content : !model['BEST'].content;
+	$: submitDisabled =
+		submitting || (kind === 'WORST' ? !model['WORST'].content : !model['BEST'].content);
 
-	// Középen legyen egy átkattinható BEST|WORST radio gomb ami vált boldog és szomorú textarea között
-	// alatta submit gomb, enterre is megy
-	// alatta pedig random színes listában amit felvittél, lehet prop
-	// random emoji a válaszott rádiógomb mellett
-
+	let submitting = false;
 	const submit = () => {
+		submitting = true;
 		const highlight = model[kind];
 		if (highlight.content) {
 			dispatch('submit', { content: highlight.content, kind });
 			model[kind].content = '';
 		}
+		submitting = false;
 	};
 </script>
 
@@ -88,7 +86,18 @@
 				</label>
 			</div>
 			<button type="submit" disabled={submitDisabled}>
-				<FaPlus />
+				<svg
+					width="32"
+					height="32"
+					viewBox="0 0 24 24"
+					fill="none"
+					xmlns="http://www.w3.org/2000/svg"
+				>
+					<path
+						d="M12 4C11.4477 4 11 4.44772 11 5V11H5C4.44772 11 4 11.4477 4 12C4 12.5523 4.44772 13 5 13H11V19C11 19.5523 11.4477 20 12 20C12.5523 20 13 19.5523 13 19V13H19C19.5523 13 20 12.5523 20 12C20 11.4477 19.5523 11 19 11H13V5C13 4.44772 12.5523 4 12 4Z"
+						fill="currentColor"
+					/>
+				</svg>
 			</button>
 		</div>
 		{#if kind === HighlightKind.WORST}
@@ -169,7 +178,6 @@
 				align-items: center;
 				background: transparent;
 				border: none;
-				color: var(--very-dark);
 				display: flex;
 				transition: color 0.2s ease;
 				width: 40px;
@@ -186,13 +194,19 @@
 				color: var(--light);
 				cursor: default;
 			}
+
+			& button:disabled:hover {
+				background: transparent;
+				color: var(--light);
+				cursor: default;
+			}
 		}
 
 		& textarea {
+			border-bottom-left-radius: 8px;
+			border-bottom-right-radius: 8px;
 			border-color: var(--dark);
-			border-radius: 8px;
 			border-style: solid;
-			border-top-left-radius: 0;
 			border-width: 4px;
 			font-size: small;
 			padding: 0;
