@@ -20,6 +20,7 @@
 		border-radius: 24px;
 		display: flex;
 		justify-content: space-evenly;
+		margin: 8px;
 
 		& button {
 			align-content: center;

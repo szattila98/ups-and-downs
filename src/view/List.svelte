@@ -4,38 +4,16 @@
 	import RandomEmoji from '../lib/components/RandomEmoji.svelte';
 	import FaRegCalendarAlt from 'svelte-icons/fa/FaRegCalendarAlt.svelte';
 	import { happyEmojis, sadEmojis } from '../lib/constants/emojis';
-	import ViewHeader from '@/lib/components/ViewHeader.svelte';
-
-	const randomColor = (type?: 'light' | 'dark'): string => {
-		let base, range;
-
-		switch (type) {
-			case 'light':
-				base = 127;
-				range = 128;
-				break;
-			case 'dark':
-				base = 0;
-				range = 128;
-				break;
-			default:
-				base = 0;
-				range = 256;
-		}
-
-		const r = Math.floor(Math.random() * range) + base;
-		const g = Math.floor(Math.random() * range) + base;
-		const b = Math.floor(Math.random() * range) + base;
-
-		return ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
-	};
+	import ViewHeader from '@/lib/layouts/ViewHeader.svelte';
+	import ViewMain from '@/lib/layouts/ViewMain.svelte';
+	import { randomColor } from '@/lib/utils/color';
 </script>
 
 <ViewHeader on:toMenu>
 	<h2 slot="middle">Highlights</h2>
 	<button slot="right" class="calendar-btn"><FaRegCalendarAlt /></button>
 </ViewHeader>
-<main>
+<ViewMain>
 	{#await commands.listHighlights()}
 		<p>Loading</p>
 	{:then highlights}
@@ -67,62 +45,55 @@
 			<p>No highlights to list yet!</p>
 		{/each}
 	{/await}
-</main>
+</ViewMain>
 
 <style scoped>
-	main {
-		align-items: center;
+	.highlight {
 		display: flex;
 		flex-direction: column;
+		width: 100%;
 
-		& .highlight {
+		& .highlight-date {
+			background: var(--dark);
+			border-start-end-radius: 8px;
+			border-start-start-radius: 8px;
+			color: var(--light);
+			margin: 0;
+			padding: 4px 8px;
+			width: fit-content;
+		}
+
+		& .highlight-container {
 			display: flex;
 			flex-direction: column;
+			justify-content: center;
 			width: 100%;
 
-			& .highlight-date {
-				background: var(--dark);
-				border-start-end-radius: 8px;
-				border-start-start-radius: 8px;
-				color: var(--light);
-				margin: 0;
-				margin-top: 8px;
-				padding: 4px 8px;
-				width: fit-content;
-			}
+			& div[class^='highlight-'] {
+				font-size: small;
 
-			& .highlight-container {
-				display: flex;
-				flex-direction: column;
-				justify-content: center;
-				width: 100%;
+				& ul {
+					list-style-type: none;
+					margin: 8px;
+					padding-left: 4px;
 
-				& div[class^='highlight-'] {
-					font-size: small;
-
-					& ul {
-						list-style-type: none;
-						margin: 8px;
-						padding-left: 4px;
-
-						& li {
-							align-items: center;
-							display: flex;
-							gap: 4px;
-						}
+					& li {
+						align-items: center;
+						display: flex;
+						gap: 4px;
 					}
 				}
+			}
 
-				& .highlight-best {
-					border-top-right-radius: 8px;
-					color: var(--very-dark);
-				}
+			& .highlight-best {
+				border-top-right-radius: 8px;
+				color: var(--very-dark);
+			}
 
-				& .highlight-worst {
-					border-bottom-left-radius: 8px;
-					border-bottom-right-radius: 8px;
-					color: var(--light);
-				}
+			& .highlight-worst {
+				border-bottom-left-radius: 8px;
+				border-bottom-right-radius: 8px;
+				color: var(--light);
 			}
 		}
 	}

@@ -15,10 +15,10 @@
 
 <style scoped>
 	.text-emoji {
-		font-size: var(--emoji-height, 24px);
+		font-size: var(--emoji-font-size, 24px);
 	}
 
 	.img-emoji {
-		height: var(--emoji-height, 24px);
+		height: var(--emoji-img-height, 24px);
 	}
 </style>

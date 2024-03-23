@@ -2,23 +2,30 @@ use sqlx::sqlite::SqlitePoolOptions;
 use sqlx::SqlitePool;
 use std::fs;
 use std::path::Path;
+use tap::Tap;
+use tracing::info;
+
+use tauri::PathResolver;
 
 pub struct DbWrapper {
     pub pool: SqlitePool,
 }
 
-pub fn init() {
-    if !db_file_exists() {
-        create_db_file();
+pub fn init(path_resolver: &PathResolver) -> String {
+    let db_path = get_db_path(path_resolver);
+    if !db_file_exists(&db_path) {
+        create_db_file(&db_path).tap(|_| info!("created sqlite db file on path: '{db_path}'"));
     }
+    db_path
 }
 
-pub async fn establish_connection() -> SqlitePool {
+pub async fn establish_connection(db_path: String) -> SqlitePool {
     let pool = SqlitePoolOptions::new()
         .max_connections(100)
-        .connect(&get_db_path())
+        .connect(&db_path)
         .await
-        .expect("Unable to connect to Postgres");
+        .expect("error while connecting to sqlite database")
+        .tap(|_| info!("connected to sqlite db on path: '{db_path}'"));
     sqlx::migrate!()
         .run(&pool)
         .await
@@ -26,13 +33,11 @@ pub async fn establish_connection() -> SqlitePool {
     pool
 }
 
-fn db_file_exists() -> bool {
-    let db_path = get_db_path();
-    Path::new(&db_path).exists()
+fn db_file_exists(db_path: &str) -> bool {
+    Path::new(db_path).exists()
 }
 
-fn create_db_file() {
-    let db_path = get_db_path();
+fn create_db_file(db_path: &str) {
     let db_dir = Path::new(&db_path)
         .parent()
         .expect("cannot get sqlite parent directory");
@@ -44,12 +49,12 @@ fn create_db_file() {
     fs::File::create(db_path).expect("cannot create sqlite file");
 }
 
-fn get_db_path() -> String {
-    let home_dir = dirs::home_dir().expect("cannot get user home directory");
-    format!(
-        "{}/.config/ups-and-downs/database.sqlite",
-        home_dir
-            .to_str()
-            .expect("cannot convert user home directory to string")
-    )
+fn get_db_path(path_resolver: &PathResolver) -> String {
+    path_resolver
+        .app_data_dir()
+        .expect("could not resolve app data directory")
+        .join("database.sqlite")
+        .to_str()
+        .expect("could not convert database path to string")
+        .to_string()
 }

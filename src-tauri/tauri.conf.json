@@ -28,7 +28,8 @@
         "resizable": false,
         "title": "Ups & Downs",
         "width": 300,
-        "height": 500
+        "height": 500,
+        "center": false
       }
     ],
     "security": {
@@ -37,7 +38,7 @@
     "bundle": {
       "active": true,
       "targets": "all",
-      "identifier": "com.ati.dev",
+      "identifier": "org.ezren.ups-and-downs",
       "icon": [
         "icons/32x32.png",
         "icons/128x128.png",
