@@ -4,7 +4,7 @@
 async recordHighlight(req: CreateHighlightRequest) : Promise<GroupedHighlight> {
 return await TAURI_INVOKE("plugin:tauri-specta|record_highlight", { req });
 },
-async getTodaysHighlight() : Promise<{ best: Highlight | null; worst: Highlight | null; date: string } | null> {
+async getTodaysHighlight() : Promise<{ best: Highlight[]; worst: Highlight[]; date: string } | null> {
 return await TAURI_INVOKE("plugin:tauri-specta|get_todays_highlight");
 },
 async listHighlights() : Promise<GroupedHighlight[]> {
@@ -17,7 +17,7 @@ return await TAURI_INVOKE("plugin:tauri-specta|list_highlights");
 /** user-defined types **/
 
 export type CreateHighlightRequest = { content: string; kind: Kind }
-export type GroupedHighlight = { best: Highlight | null; worst: Highlight | null; date: string }
+export type GroupedHighlight = { best: Highlight[]; worst: Highlight[]; date: string }
 export type Highlight = { id: number; content: string; kind: Kind; created_at: string; updated_at: string | null }
 export type Kind = "BEST" | "WORST"
 

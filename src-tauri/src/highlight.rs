@@ -1,6 +1,8 @@
 use serde::{Deserialize, Serialize};
+use tap::Tap;
 use tauri::{async_runtime::block_on, State};
 use time::OffsetDateTime;
+use tracing::debug;
 
 use crate::db::DbWrapper;
 
@@ -33,32 +35,25 @@ pub fn record_highlight(
     state: State<'_, DbWrapper>,
     req: CreateHighlightRequest,
 ) -> GroupedHighlight {
-    let future = sqlx::query_as!(
-        Highlight,
+    let future = sqlx::query!(
         r#"
             INSERT INTO highlight ( content, kind ) 
             VALUES ( $1, $2 )
-            RETURNING id as "id: i32", content, kind as "kind: Kind", created_at, updated_at
         "#,
         req.content,
         req.kind
     )
-    .fetch_one(&state.pool);
-    let highlight = block_on(future).expect("error while saving highlight to database");
-
-    let todays_highlight = get_todays_highlight(state);
-    return if let Some(mut grouped_highlight) = todays_highlight {
-        grouped_highlight.add_highlight(highlight);
-        grouped_highlight
-    } else {
-        GroupedHighlight::new(highlight)
-    };
+    .execute(&state.pool);
+    block_on(future).expect("error while saving highlight to database");
+    get_todays_highlight(state)
+        .expect("error while fetching saved highlight")
+        .tap(|gh| debug!("returning saved highlight in today's grouped highlight\n{gh:#?}"))
 }
 
 #[derive(Debug, Serialize, Deserialize, specta::Type)]
 pub struct GroupedHighlight {
-    pub best: Option<Highlight>,
-    pub worst: Option<Highlight>,
+    pub best: Vec<Highlight>,
+    pub worst: Vec<Highlight>,
     #[serde(with = "time::serde::timestamp::milliseconds")]
     pub date: OffsetDateTime,
 }
@@ -68,13 +63,13 @@ impl GroupedHighlight {
         let created_at = highlight.created_at.clone();
         match highlight.kind {
             Kind::Best => Self {
-                best: Some(highlight),
-                worst: None,
+                best: vec![highlight],
+                worst: vec![],
                 date: created_at,
             },
             Kind::Worst => Self {
-                best: None,
-                worst: Some(highlight),
+                best: vec![],
+                worst: vec![highlight],
                 date: created_at,
             },
         }
@@ -82,8 +77,8 @@ impl GroupedHighlight {
 
     pub fn add_highlight(&mut self, highlight: Highlight) {
         match highlight.kind {
-            Kind::Best => self.best = Some(highlight),
-            Kind::Worst => self.worst = Some(highlight),
+            Kind::Best => self.best.push(highlight),
+            Kind::Worst => self.worst.push(highlight),
         };
     }
 }
