@@ -3,6 +3,7 @@
 
 use db::DbWrapper;
 use tauri::{async_runtime::block_on, Manager};
+use tracing::Level;
 
 mod db;
 mod highlight;
@@ -11,7 +12,7 @@ fn main() {
     let specta_builder = {
         let specta_builder = tauri_specta::ts::builder().commands(tauri_specta::collect_commands![
             highlight::record_highlight,
-            highlight::has_recorded_today,
+            highlight::get_todays_highlight,
             highlight::list_highlights
         ]);
 
@@ -21,11 +22,18 @@ fn main() {
         specta_builder.into_plugin()
     };
 
-    db::init();
-    let pool = block_on(db::establish_connection());
+    let subscriber = tracing_subscriber::FmtSubscriber::builder()
+        .with_max_level(Level::INFO)
+        .finish();
+    tracing::subscriber::set_global_default(subscriber).expect("setting default subscriber failed");
 
     tauri::Builder::default()
         .setup(|app| {
+            let path_resolver = app.path_resolver();
+            let db_path = db::init(&path_resolver);
+            let pool = block_on(db::establish_connection(db_path));
+            app.manage(DbWrapper { pool });
+
             #[cfg(debug_assertions)] // only include this code on debug builds
             {
                 let window = app.get_window("main").expect("cannot get main window");
@@ -33,7 +41,6 @@ fn main() {
             }
             Ok(())
         })
-        .manage(DbWrapper { pool })
         .plugin(specta_builder)
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

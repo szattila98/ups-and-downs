@@ -1,0 +1,44 @@
+{
+  "db_name": "SQLite",
+  "query": "\n            SELECT id as \"id: i32\", content, kind as \"kind: Kind\", created_at, updated_at\n            FROM highlight\n            WHERE date(created_at) = date(CURRENT_DATE)\n        ",
+  "describe": {
+    "columns": [
+      {
+        "name": "id: i32",
+        "ordinal": 0,
+        "type_info": "Int64"
+      },
+      {
+        "name": "content",
+        "ordinal": 1,
+        "type_info": "Text"
+      },
+      {
+        "name": "kind: Kind",
+        "ordinal": 2,
+        "type_info": "Text"
+      },
+      {
+        "name": "created_at",
+        "ordinal": 3,
+        "type_info": "Datetime"
+      },
+      {
+        "name": "updated_at",
+        "ordinal": 4,
+        "type_info": "Datetime"
+      }
+    ],
+    "parameters": {
+      "Right": 0
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      true
+    ]
+  },
+  "hash": "93ab3c90dad899257057bd3e5bc6ec75bd0f2647c9516e1d16d240bdf5e3cc38"
+}

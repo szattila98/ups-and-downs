@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
-	import { hasUserRecordedToday } from '../store';
+	import { todaysHighlight } from '../store';
 
 	const dispatch = createEventDispatcher<{
 		toNew: null;
@@ -13,10 +13,13 @@
 	<img src="/img/logo.png" alt="logo" />
 </header>
 <main>
-	<button on:click={() => dispatch('toNew')} disabled={$hasUserRecordedToday}
-		>New highlights</button
-	>
-	<button disabled={!$hasUserRecordedToday}>Edit highlight</button>
+	<button on:click={() => dispatch('toNew')}>
+		{#if $todaysHighlight}
+			Edit highlight
+		{:else}
+			New highlights
+		{/if}
+	</button>
 	<button on:click={() => dispatch('toList')}>List</button>
 	<button>Settings</button>
 	<button on:click={() => dispatch('exit')}>Exit</button>
@@ -28,6 +31,7 @@
 		justify-content: center;
 		margin-bottom: 12px;
 		& img {
+			margin-top: 16px;
 			width: 160px;
 		}
 	}
@@ -41,7 +45,7 @@
 			background: var(--secondary);
 			border: none;
 			border-radius: 12px;
-			box-shadow: 3px 3px 2px black;
+			box-shadow: 3px 3px 2px var(--very-dark);
 			color: var(--very-dark);
 			font-size: medium;
 			font-weight: bold;

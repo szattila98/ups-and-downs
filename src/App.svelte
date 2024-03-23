@@ -1,11 +1,10 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { commands } from './bindings';
-	import type { DailyHighlight } from './types';
+	import { commands, type CreateHighlightRequest } from './bindings';
 	import Record from './view/Record.svelte';
 	import Menu from './view/Menu.svelte';
 	import List from './view/List.svelte';
-	import { hasUserRecordedToday } from './store';
+	import { todaysHighlight } from './store';
 	import { exit } from '@tauri-apps/api/process';
 
 	enum AppState {
@@ -17,32 +16,21 @@
 	let state: AppState = AppState.Menu;
 
 	const init = async () => {
-		const result = await commands.hasRecordedToday();
-		hasUserRecordedToday.set(result);
+		const result = await commands.getTodaysHighlight();
+		$todaysHighlight = result;
 	};
 
 	onMount(async () => {
 		await init();
-		if ($hasUserRecordedToday) {
+		if ($todaysHighlight) {
 			state = AppState.Menu;
 		} else {
 			state = AppState.Record;
 		}
 	});
 
-	const newHighlight = async ({ detail: dailyHighlight }: CustomEvent<DailyHighlight>) => {
-		const promises: ReturnType<typeof commands.recordHighlight>[] = [];
-		if (dailyHighlight.best) {
-			promises.push(commands.recordHighlight({ content: dailyHighlight.best, kind: 'BEST' }));
-		}
-		if (dailyHighlight.worst) {
-			promises.push(
-				commands.recordHighlight({ content: dailyHighlight.worst, kind: 'WORST' })
-			);
-		}
-		await Promise.all(promises);
-		await init();
-		state = AppState.Menu;
+	const newHighlight = async ({ detail: highlight }: CustomEvent<CreateHighlightRequest>) => {
+		$todaysHighlight = await commands.recordHighlight(highlight);
 	};
 
 	const toMenu = () => (state = AppState.Menu);

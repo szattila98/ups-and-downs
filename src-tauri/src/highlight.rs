@@ -29,35 +29,30 @@ pub struct CreateHighlightRequest {
 
 #[tauri::command]
 #[specta::specta]
-pub fn record_highlight(state: State<'_, DbWrapper>, req: CreateHighlightRequest) {
+pub fn record_highlight(
+    state: State<'_, DbWrapper>,
+    req: CreateHighlightRequest,
+) -> GroupedHighlight {
     let future = sqlx::query_as!(
         Highlight,
         r#"
             INSERT INTO highlight ( content, kind ) 
             VALUES ( $1, $2 )
+            RETURNING id as "id: i32", content, kind as "kind: Kind", created_at, updated_at
         "#,
         req.content,
         req.kind
     )
-    .execute(&state.pool);
-    block_on(future).expect("error while saving highlight to database");
-}
-
-#[tauri::command]
-#[specta::specta]
-pub fn has_recorded_today(state: State<'_, DbWrapper>) -> bool {
-    let future = sqlx::query!(
-        r#"
-            SELECT EXISTS (
-                SELECT 1 FROM highlight WHERE date(created_at) = date(CURRENT_DATE)
-            ) AS "exists!";
-        "#,
-    )
     .fetch_one(&state.pool);
-    block_on(future)
-        .expect("error while checking if user has recorded today in database")
-        .exists
-        == 1
+    let highlight = block_on(future).expect("error while saving highlight to database");
+
+    let todays_highlight = get_todays_highlight(state);
+    return if let Some(mut grouped_highlight) = todays_highlight {
+        grouped_highlight.add_highlight(highlight);
+        grouped_highlight
+    } else {
+        GroupedHighlight::new(highlight)
+    };
 }
 
 #[derive(Debug, Serialize, Deserialize, specta::Type)]
@@ -91,6 +86,30 @@ impl GroupedHighlight {
             Kind::Worst => self.worst = Some(highlight),
         };
     }
+}
+
+#[tauri::command]
+#[specta::specta]
+pub fn get_todays_highlight(state: State<'_, DbWrapper>) -> Option<GroupedHighlight> {
+    let future = sqlx::query_as!(
+        Highlight,
+        r#"
+            SELECT id as "id: i32", content, kind as "kind: Kind", created_at, updated_at
+            FROM highlight
+            WHERE date(created_at) = date(CURRENT_DATE)
+        "#,
+    )
+    .fetch_all(&state.pool);
+    let highlights = block_on(future).expect("error while fetching today's highlights");
+    let mut todays_highlight: Option<GroupedHighlight> = None;
+    for highlight in highlights {
+        if let Some(ref mut grouped_highlight) = todays_highlight {
+            grouped_highlight.add_highlight(highlight);
+        } else {
+            todays_highlight = Some(GroupedHighlight::new(highlight))
+        }
+    }
+    todays_highlight
 }
 
 #[tauri::command]
