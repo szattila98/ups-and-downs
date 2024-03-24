@@ -26,6 +26,7 @@
 		"clean:all": "rm -rf node_modules .yarn dist yarn.lock"
 	},
 	"dependencies": {
+		"@floating-ui/dom": "1.6.3",
 		"@tauri-apps/api": "1.5.3",
 		"dayjs": "1.11.10",
 		"ts-toolbelt": "^9.6.0"
