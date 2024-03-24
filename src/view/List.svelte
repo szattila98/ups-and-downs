@@ -6,6 +6,7 @@
 	import ViewHeader from '@/lib/layouts/ViewHeader.svelte';
 	import ViewMain from '@/lib/layouts/ViewMain.svelte';
 	import { randomColor } from '@/lib/utils/color';
+	import Tooltip from '@/lib/components/Tooltip.svelte';
 </script>
 
 <ViewHeader on:toMenu>
@@ -30,9 +31,14 @@
 	{:then highlights}
 		{#each highlights as highlight}
 			<div class="highlight">
-				<span class="highlight-date" title={dayjs(highlight.date).format('LLL')}>
-					{dayjs(highlight.date).fromNow()}
-				</span>
+				<Tooltip placement="right" offset={7}>
+					<span slot="host" class="highlight-date">
+						{dayjs(highlight.date).fromNow()}
+					</span>
+					<span class="tooltip-content" slot="content"
+						>{dayjs(highlight.date).format('LL')}</span
+					>
+				</Tooltip>
 				<ul class="highlight-container">
 					{#each highlight.best as best, index}
 						<li
@@ -132,5 +138,9 @@
 			background: var(--highlight);
 			cursor: pointer;
 		}
+	}
+
+	.tooltip-content {
+		font-size: smaller;
 	}
 </style>

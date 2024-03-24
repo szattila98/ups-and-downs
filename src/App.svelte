@@ -7,6 +7,7 @@
 	import { todaysHighlight } from './store';
 	import { exit } from '@tauri-apps/api/process';
 	import Spinner from './lib/components/Spinner.svelte';
+	import Tooltip from './lib/components/Tooltip.svelte';
 
 	enum AppState {
 		Loading,
