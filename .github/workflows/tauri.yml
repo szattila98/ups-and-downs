@@ -18,7 +18,7 @@ jobs:
         strategy:
             fail-fast: true
             matrix:
-                platform: [macos-latest, ubuntu-latest, windows-latest]
+                platform: [macos-latest, ubuntu-20.04, windows-latest]
 
         runs-on: ${{ matrix.platform }}
         steps:
@@ -33,18 +33,11 @@ jobs:
 
             - uses: dtolnay/rust-toolchain@stable
 
-            - if: matrix.platform == 'ubuntu-latest'
-              run: |
-                  sudo apt update
-                  sudo apt install libwebkit2gtk-4.0-dev \
-                      build-essential \
-                      curl \
-                      wget \
-                      file \
-                      libssl-dev \
-                      libgtk-3-dev \
-                      libayatana-appindicator3-dev \
-                      librsvg2-dev
+            - if: matrix.platform == 'ubuntu-20.04'
+              uses: awalsh128/cache-apt-pkgs-action@latest
+              with:
+                  packages: libgtk-3-dev libwebkit2gtk-4.0-dev libayatana-appindicator3-dev librsvg2-dev
+                  version: 1.0
 
             - run: yarn install --immutable
 
