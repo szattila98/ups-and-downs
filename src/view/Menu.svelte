@@ -24,6 +24,11 @@
 	<button>Settings</button>
 	<button on:click={() => dispatch('exit')}>Exit</button>
 </main>
+<footer>
+	<a href="https://github.com/szattila98/ups-and-downs" target="_blank">
+		<img src="/img/github-mark.png" alt="Github logo" />
+	</a>
+</footer>
 
 <style scoped>
 	header {
@@ -68,6 +73,19 @@
 					cursor: auto;
 				}
 			}
+		}
+	}
+
+	footer {
+		align-items: center;
+		display: flex;
+		flex-direction: row;
+		font-size: larger;
+		justify-content: center;
+		padding-top: 20px;
+
+		& img {
+			width: 32px;
 		}
 	}
 </style>
