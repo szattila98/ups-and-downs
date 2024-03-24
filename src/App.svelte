@@ -7,7 +7,7 @@
 	import { todaysHighlight } from './store';
 	import { exit } from '@tauri-apps/api/process';
 	import Spinner from './lib/components/Spinner.svelte';
-	import Tooltip from './lib/components/Tooltip.svelte';
+	import JumpToTopButton from './lib/components/JumpToTopButton.svelte';
 
 	enum AppState {
 		Loading,
@@ -25,11 +25,14 @@
 
 	onMount(async () => {
 		await init();
+		/* 
 		if ($todaysHighlight) {
 			state = AppState.Menu;
 		} else {
 			state = AppState.Record;
-		}
+		} 
+		*/
+		state = AppState.Menu;
 	});
 
 	const newHighlight = async ({ detail: highlight }: CustomEvent<CreateHighlightRequest>) => {
@@ -39,6 +42,7 @@
 	const toMenu = () => (state = AppState.Menu);
 </script>
 
+<JumpToTopButton />
 {#if state === AppState.Loading}
 	<div class="loader">
 		<Spinner />

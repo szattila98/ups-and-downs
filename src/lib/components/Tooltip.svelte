@@ -129,9 +129,9 @@
 	}
 
 	#tooltip {
-		background: #222;
+		background: var(--highlight);
 		border-radius: 4px;
-		color: white;
+		color: var(--light);
 		display: none;
 		font-size: 90%;
 		font-weight: bold;
@@ -143,7 +143,7 @@
 	}
 
 	#arrow {
-		background: #222;
+		background: var(--highlight);
 		height: 8px;
 		position: absolute;
 		transform: rotate(45deg);
