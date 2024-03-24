@@ -60,7 +60,7 @@ pub struct GroupedHighlight {
 
 impl GroupedHighlight {
     pub fn new(highlight: Highlight) -> Self {
-        let created_at = highlight.created_at.clone();
+        let created_at = highlight.created_at;
         match highlight.kind {
             Kind::Best => Self {
                 best: vec![highlight],
@@ -101,7 +101,7 @@ pub fn get_todays_highlight(state: State<'_, DbWrapper>) -> Option<GroupedHighli
         if let Some(ref mut grouped_highlight) = todays_highlight {
             grouped_highlight.add_highlight(highlight);
         } else {
-            todays_highlight = Some(GroupedHighlight::new(highlight))
+            todays_highlight = Some(GroupedHighlight::new(highlight));
         }
     }
     todays_highlight

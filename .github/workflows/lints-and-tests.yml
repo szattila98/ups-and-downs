@@ -10,7 +10,7 @@ on:
 
 jobs:
     commit-check:
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-20.04
         name: Check conventional commit compliance
         steps:
             - uses: actions/checkout@v4
@@ -22,7 +22,7 @@ jobs:
               uses: cocogitto/cocogitto-action@v3
 
     frontend-checks:
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-20.04
         name: Frontend checks
         needs: [commit-check]
         steps:
@@ -51,7 +51,7 @@ jobs:
                   retention-days: 30
 
     backend-checks:
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-20.04
         name: Backend checks
         needs: [commit-check, frontend-checks]
         steps:
@@ -59,14 +59,14 @@ jobs:
 
             - uses: Swatinem/rust-cache@v2
               with:
-                  shared-key: whooosh-ubuntu-latest
+                  shared-key: whooosh-ubuntu-20.04
                   workspaces: src-tauri
 
             - uses: dtolnay/rust-toolchain@stable
 
             - uses: awalsh128/cache-apt-pkgs-action@latest
               with:
-                  packages: libwebkit2gtk-4.0-dev build-essential curl wget file libssl-dev libgtk-3-dev libayatana-appindicator3-dev librsvg2-dev
+                  packages: libgtk-3-dev libwebkit2gtk-4.0-dev libayatana-appindicator3-dev librsvg2-dev
                   version: 1.0
 
             - name: Backend check

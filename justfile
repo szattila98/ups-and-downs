@@ -19,3 +19,7 @@ add-git-hook:
 
 watch:
     @yarn && yarn tauri dev
+
+lint:
+    @yarn lint
+    @cd src-tauri && cargo fmt --all -- --check && cargo clippy

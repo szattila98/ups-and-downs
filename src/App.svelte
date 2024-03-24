@@ -7,7 +7,6 @@
 	import { todaysHighlight } from './store';
 	import { exit } from '@tauri-apps/api/process';
 	import Spinner from './lib/components/Spinner.svelte';
-	import { fade } from 'svelte/transition';
 
 	enum AppState {
 		Loading,
