@@ -1,0 +1,12 @@
+{
+  "db_name": "SQLite",
+  "query": "\n            UPDATE highlight\n            SET content = $1, updated_at = CURRENT_TIMESTAMP\n            WHERE id = $2;\n        ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 2
+    },
+    "nullable": []
+  },
+  "hash": "c062f176f1f27e264652dc128cac372a4f718c4b248922e091ee8eb1553d20aa"
+}

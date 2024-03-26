@@ -12,8 +12,10 @@ fn main() {
     let specta_builder = {
         let specta_builder = tauri_specta::ts::builder().commands(tauri_specta::collect_commands![
             highlight::record_highlight,
-            highlight::get_todays_highlight,
-            highlight::list_highlights
+            highlight::get_highlights_by_date,
+            highlight::list_highlights,
+            highlight::delete_highlight,
+            highlight::edit_highlight
         ]);
 
         #[cfg(debug_assertions)]

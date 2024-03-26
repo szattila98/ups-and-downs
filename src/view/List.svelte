@@ -1,16 +1,37 @@
 <script lang="ts">
-	import { commands } from '../bindings';
+	import { commands, type Highlight } from '../bindings';
 	import dayjs from 'dayjs';
 	import RandomEmoji from '../lib/components/RandomEmoji.svelte';
 	import { happyEmojis, sadEmojis } from '../lib/constants/emojis';
 	import ViewHeader from '@/lib/layouts/ViewHeader.svelte';
 	import ViewMain from '@/lib/layouts/ViewMain.svelte';
 	import { randomColor } from '@/lib/utils/color';
-	import Tooltip from '@/lib/components/Tooltip.svelte';
+	import { onMount } from 'svelte';
+	import Spinner from '@/lib/components/Spinner.svelte';
+	import { DATE_FORMAT } from '@/lib/utils/date';
+
+	let loading = true;
+	let highlights: Highlight[] = [];
+
+	onMount(async () => {
+		highlights = await commands.listHighlights();
+		loading = false;
+	});
+
+	type GroupedHighlights = Record<string, Highlight[]>;
+
+	$: shownHighlights = highlights.reduce((group: GroupedHighlights, highlight) => {
+		const date = dayjs(highlight.created_at).format(DATE_FORMAT);
+		if (!group[date]) {
+			group[date] = [];
+		}
+		group[date].push(highlight);
+		return group;
+	}, {});
 </script>
 
 <ViewHeader on:toMenu>
-	<h2 slot="middle">Highlights</h2>
+	<h2 slot="middle">List</h2>
 	<button slot="right" class="calendar-btn">
 		<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
 			><path
@@ -26,46 +47,39 @@
 	</button>
 </ViewHeader>
 <ViewMain>
-	{#await commands.listHighlights()}
-		<p>Loading</p>
-	{:then highlights}
-		{#each highlights as highlight}
+	{#if loading}
+		<Spinner />
+	{:else}
+		{#each Object.entries(shownHighlights) as [date, highlights]}
+			{@const bests = highlights.filter((highlight) => highlight.kind === 'BEST')}
+			{@const worsts = highlights.filter((highlight) => highlight.kind === 'WORST')}
 			<div class="highlight">
-				<Tooltip placement="right" offset={7}>
-					<span slot="host" class="highlight-date">
-						{dayjs(highlight.date).fromNow()}
-					</span>
-					<span class="tooltip-content" slot="content"
-						>{dayjs(highlight.date).format('LL')}</span
-					>
-				</Tooltip>
-				<ul class="highlight-container">
-					{#each highlight.best as best, index}
-						<li
+				<span class="highlight-date">
+					{dayjs(date, DATE_FORMAT).format('LL')}
+				</span>
+				<div class="highlight-container">
+					{#each bests as best, index}
+						<div
 							class="highlight-best"
-							style={`background-color: #${randomColor('light')};`}
-							data-last={highlight.best.length === index + 1 &&
-								!!highlight.worst.length}
+							style:background-color={randomColor('light')}
+							data-last={bests.length === index + 1 && !!worsts.length}
 						>
 							<RandomEmoji emojis={happyEmojis} />
 							<span>{best?.content}</span>
-						</li>
+						</div>
 					{/each}
-					{#each highlight.worst as worst}
-						<li
-							class="highlight-worst"
-							style={`background-color: #${randomColor('dark')};`}
-						>
+					{#each worsts as worst}
+						<div class="highlight-worst" style:background-color={randomColor('dark')}>
 							<RandomEmoji emojis={sadEmojis} />
 							<span>{worst?.content}</span>
-						</li>
+						</div>
 					{/each}
-				</ul>
+				</div>
 			</div>
 		{:else}
 			<p>No highlights to list yet!</p>
 		{/each}
-	{/await}
+	{/if}
 </ViewMain>
 
 <style scoped>
@@ -89,7 +103,7 @@
 			margin: 0;
 			padding-left: 0;
 
-			& li {
+			& div[class^='highlight'] {
 				align-items: center;
 				display: flex;
 				gap: 4px;
@@ -99,16 +113,16 @@
 				}
 			}
 
-			& li:first-of-type {
+			& div[class^='highlight']:first-of-type {
 				border-top-right-radius: 8px;
 			}
 
-			& li:last-of-type {
+			& div[class^='highlight']:last-of-type {
 				border-bottom-left-radius: 8px;
 				border-bottom-right-radius: 8px;
 			}
 
-			& li[data-last='true'] {
+			& div[class^='highlight'][data-last='true'] {
 				border-bottom: 2px solid var(--highlight);
 			}
 
@@ -138,9 +152,5 @@
 			background: var(--highlight);
 			cursor: pointer;
 		}
-	}
-
-	.tooltip-content {
-		font-size: smaller;
 	}
 </style>

@@ -1,10 +1,10 @@
 {
   "db_name": "SQLite",
-  "query": "\n            SELECT id as \"id: i32\", content, kind as \"kind: Kind\", created_at, updated_at\n            FROM highlight\n            WHERE date(created_at) = date(CURRENT_DATE)\n        ",
+  "query": "\n            SELECT id as \"id: Id\", content, kind as \"kind: Kind\", created_at, updated_at\n            FROM highlight\n            WHERE date(created_at) = date($1)\n        ",
   "describe": {
     "columns": [
       {
-        "name": "id: i32",
+        "name": "id: Id",
         "ordinal": 0,
         "type_info": "Int64"
       },
@@ -30,7 +30,7 @@
       }
     ],
     "parameters": {
-      "Right": 0
+      "Right": 1
     },
     "nullable": [
       false,
@@ -40,5 +40,5 @@
       true
     ]
   },
-  "hash": "93ab3c90dad899257057bd3e5bc6ec75bd0f2647c9516e1d16d240bdf5e3cc38"
+  "hash": "6833ad907b6f8bf6556c56898a3c83b7d4732e42cf33380055a12f443d2fd34b"
 }

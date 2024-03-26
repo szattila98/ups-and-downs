@@ -19,5 +19,5 @@ export const randomColor = (type?: 'light' | 'dark'): string => {
 	const g = Math.floor(Math.random() * range) + base;
 	const b = Math.floor(Math.random() * range) + base;
 
-	return ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+	return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
 };
