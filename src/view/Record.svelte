@@ -36,11 +36,18 @@
 		[HighlightKind.WORST]: { content: null, kind: HighlightKind.WORST },
 		[HighlightKind.BEST]: { content: null, kind: HighlightKind.BEST }
 	};
+	let submitting = false;
+	let updateId: Nullable<number> = null;
+	let previousContent: Nullable<string> = null;
+	let deleteIds: number[] = [];
 
+	$: shownHighlights = $todaysHighlight.filter((highlight) => highlight.kind === kind);
 	$: submitDisabled =
 		submitting || (kind === 'WORST' ? !model['WORST'].content : !model['BEST'].content);
+	$: showSubmit = !submitDisabled && !updateId && !deleteIds.length;
+	$: showDeleteConfirm = !updateId && deleteIds.length;
+	$: showUpdate = updateId && !deleteIds.length;
 
-	let submitting = false;
 	const submit = () => {
 		submitting = true;
 
@@ -69,10 +76,6 @@
 		}
 	};
 
-	$: shownHighlights = $todaysHighlight.filter((highlight) => highlight.kind === kind);
-
-	let updateId: Nullable<number> = null;
-	let previousContent: Nullable<string> = null;
 	const loadContentToInput = (highlight: Highlight) => {
 		updateId = highlight.id;
 		previousContent = model[kind].content;
@@ -84,7 +87,6 @@
 		updateId = null;
 	};
 
-	let deleteIds: number[] = [];
 	const markForDeletion = (highlight: Highlight) => {
 		deleteIds = [...deleteIds, highlight.id];
 	};
@@ -99,10 +101,6 @@
 			deleteIds = [];
 		}
 	};
-
-	$: showSubmit = !submitDisabled && !updateId && !deleteIds.length;
-	$: showDeleteConfirm = !updateId && deleteIds.length;
-	$: showUpdate = updateId && !deleteIds.length;
 </script>
 
 <ViewHeader on:toMenu>

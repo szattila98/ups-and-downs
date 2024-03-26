@@ -1,0 +1,26 @@
+{
+	"emoji": {
+		"scope": "javascript,typescript",
+		"prefix": "emoji",
+		"body": [
+			"'&#$1;', // $2"
+		],
+		"description": "HTML character code template for emojis"
+	},
+	"s-script-ts": {
+		"scope": "svelte",
+		"prefix": "s-script-ts",
+		"body": [
+			"<script lang=\"ts\">$1</script>"
+		],
+		"description": "Svelte lang ts script block"
+	},
+	"s-style-scoped": {
+		"scope": "svelte",
+		"prefix": "s-style-scoped",
+		"body": [
+			"<style scoped>$1</style>"
+		],
+		"description": "Svelte scoped style block"
+	},
+}
