@@ -1,10 +1,13 @@
 use serde::{Deserialize, Serialize};
-use tap::Tap;
 use tauri::{async_runtime::block_on, State};
-use time::OffsetDateTime;
-use tracing::debug;
+use time::{
+    format_description::FormatItem, macros::format_description, OffsetDateTime, PrimitiveDateTime,
+};
 
 use crate::db::DbWrapper;
+
+static DATETIME_FORMAT: &[FormatItem<'_>] =
+    format_description!("[year]-[month]-[day] [hour]:[minute]:[second]");
 
 #[derive(Debug, Serialize, Deserialize, sqlx::Type, specta::Type, strum::EnumString)]
 #[sqlx(rename_all = "UPPERCASE")]
@@ -14,12 +17,16 @@ pub enum Kind {
     Worst,
 }
 
+type Id = i32;
+
 #[derive(Debug, Serialize, Deserialize, sqlx::FromRow, specta::Type)]
 pub struct Highlight {
-    pub id: i32,
+    pub id: Id,
     pub content: String,
     pub kind: Kind,
+    #[serde(with = "time::serde::timestamp::milliseconds")]
     pub created_at: OffsetDateTime,
+    #[serde(with = "time::serde::timestamp::milliseconds::option")]
     pub updated_at: Option<OffsetDateTime>,
 }
 
@@ -33,102 +40,101 @@ pub struct CreateHighlightRequest {
 #[specta::specta]
 pub fn record_highlight(
     state: State<'_, DbWrapper>,
-    req: CreateHighlightRequest,
-) -> GroupedHighlight {
+    request: CreateHighlightRequest,
+) -> Vec<Highlight> {
     let future = sqlx::query!(
         r#"
             INSERT INTO highlight ( content, kind ) 
             VALUES ( $1, $2 )
         "#,
-        req.content,
-        req.kind
+        request.content,
+        request.kind
     )
     .execute(&state.pool);
     block_on(future).expect("error while saving highlight to database");
-    get_todays_highlight(state)
-        .expect("error while fetching saved highlight")
-        .tap(|gh| debug!("returning saved highlight in today's grouped highlight\n{gh:#?}"))
-}
 
-#[derive(Debug, Serialize, Deserialize, specta::Type)]
-pub struct GroupedHighlight {
-    pub best: Vec<Highlight>,
-    pub worst: Vec<Highlight>,
-    #[serde(with = "time::serde::timestamp::milliseconds")]
-    pub date: OffsetDateTime,
-}
-
-impl GroupedHighlight {
-    pub fn new(highlight: Highlight) -> Self {
-        let created_at = highlight.created_at;
-        match highlight.kind {
-            Kind::Best => Self {
-                best: vec![highlight],
-                worst: vec![],
-                date: created_at,
-            },
-            Kind::Worst => Self {
-                best: vec![],
-                worst: vec![highlight],
-                date: created_at,
-            },
-        }
-    }
-
-    pub fn add_highlight(&mut self, highlight: Highlight) {
-        match highlight.kind {
-            Kind::Best => self.best.push(highlight),
-            Kind::Worst => self.worst.push(highlight),
-        };
-    }
+    get_highlights_by_date(
+        state,
+        OffsetDateTime::now_utc()
+            .format(&DATETIME_FORMAT)
+            .expect("couldn't format today's date"),
+    )
 }
 
 #[tauri::command]
 #[specta::specta]
-pub fn get_todays_highlight(state: State<'_, DbWrapper>) -> Option<GroupedHighlight> {
+pub fn get_highlights_by_date(state: State<'_, DbWrapper>, date: String) -> Vec<Highlight> {
+    debug_assert!(PrimitiveDateTime::parse(&date, &DATETIME_FORMAT).is_ok());
     let future = sqlx::query_as!(
         Highlight,
         r#"
-            SELECT id as "id: i32", content, kind as "kind: Kind", created_at, updated_at
+            SELECT id as "id: Id", content, kind as "kind: Kind", created_at, updated_at
             FROM highlight
-            WHERE date(created_at) = date(CURRENT_DATE)
+            WHERE date(created_at) = date($1)
         "#,
+        date
     )
     .fetch_all(&state.pool);
-    let highlights = block_on(future).expect("error while fetching today's highlights");
-    let mut todays_highlight: Option<GroupedHighlight> = None;
-    for highlight in highlights {
-        if let Some(ref mut grouped_highlight) = todays_highlight {
-            grouped_highlight.add_highlight(highlight);
-        } else {
-            todays_highlight = Some(GroupedHighlight::new(highlight));
-        }
-    }
-    todays_highlight
+    block_on(future).expect("error while fetching today's highlights")
 }
 
 #[tauri::command]
 #[specta::specta]
-pub fn list_highlights(state: State<'_, DbWrapper>) -> Vec<GroupedHighlight> {
+pub fn list_highlights(state: State<'_, DbWrapper>) -> Vec<Highlight> {
     let future = sqlx::query_as!(
         Highlight,
         r#"
-            SELECT id as "id: i32", content, kind as "kind: Kind", created_at, updated_at
+            SELECT id as "id: Id", content, kind as "kind: Kind", created_at, updated_at
             FROM highlight ORDER BY created_at DESC;
         "#,
     )
     .fetch_all(&state.pool);
-    let highlights = block_on(future).expect("error while listing all highlights");
-    let mut grouped_highlights: Vec<GroupedHighlight> = vec![];
-    for highlight in highlights {
-        if let Some(index) = grouped_highlights
-            .iter()
-            .position(|gh| gh.date.date() == highlight.created_at.date())
-        {
-            grouped_highlights[index].add_highlight(highlight);
-        } else {
-            grouped_highlights.push(GroupedHighlight::new(highlight));
-        }
+    block_on(future).expect("error while listing all highlights")
+}
+
+#[tauri::command]
+#[specta::specta]
+pub fn delete_highlight(state: State<'_, DbWrapper>, ids: Vec<Id>) {
+    if ids.is_empty() {
+        return;
     }
-    grouped_highlights
+    let params = format!("?{}", ", ?".repeat(ids.len() - 1));
+    let query_str = format!("DELETE FROM highlight WHERE id IN ({})", params);
+    let mut query = sqlx::query(&query_str);
+    for i in ids {
+        query = query.bind(i);
+    }
+    block_on(query.execute(&state.pool)).expect("error while deleting highlights from database");
+}
+
+#[derive(Debug, Serialize, Deserialize, specta::Type)]
+pub struct EditHighlightRequest {
+    pub id: Id,
+    pub content: String,
+}
+
+#[tauri::command]
+#[specta::specta]
+pub fn edit_highlight(
+    state: State<'_, DbWrapper>,
+    request: EditHighlightRequest,
+) -> Vec<Highlight> {
+    let future = sqlx::query!(
+        r#"
+            UPDATE highlight
+            SET content = $1, updated_at = CURRENT_TIMESTAMP
+            WHERE id = $2;
+        "#,
+        request.content,
+        request.id
+    )
+    .execute(&state.pool);
+    block_on(future).expect("error while updating a highlight");
+
+    get_highlights_by_date(
+        state,
+        OffsetDateTime::now_utc()
+            .format(&DATETIME_FORMAT)
+            .expect("couldn't format today's date"),
+    )
 }

@@ -14,7 +14,7 @@
 </header>
 <main>
 	<button on:click={() => dispatch('toNew')}>
-		{#if $todaysHighlight}
+		{#if $todaysHighlight.length}
 			Edit highlight
 		{:else}
 			New highlights

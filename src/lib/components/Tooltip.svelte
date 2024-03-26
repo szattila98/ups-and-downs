@@ -125,7 +125,7 @@
 <style scoped>
 	#host {
 		height: fit-content;
-		width: fit-content;
+		width: 100%;
 	}
 
 	#tooltip {

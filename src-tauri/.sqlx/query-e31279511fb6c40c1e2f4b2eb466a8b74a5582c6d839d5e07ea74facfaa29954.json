@@ -1,10 +1,10 @@
 {
   "db_name": "SQLite",
-  "query": "\n            SELECT id as \"id: i32\", content, kind as \"kind: Kind\", created_at, updated_at\n            FROM highlight ORDER BY created_at DESC;\n        ",
+  "query": "\n            SELECT id as \"id: Id\", content, kind as \"kind: Kind\", created_at, updated_at\n            FROM highlight ORDER BY created_at DESC;\n        ",
   "describe": {
     "columns": [
       {
-        "name": "id: i32",
+        "name": "id: Id",
         "ordinal": 0,
         "type_info": "Int64"
       },
@@ -40,5 +40,5 @@
       true
     ]
   },
-  "hash": "dcc0ab7ea9afff9cd56973cfab13d89aedbd51b137b8ba377992a4debb30daf2"
+  "hash": "e31279511fb6c40c1e2f4b2eb466a8b74a5582c6d839d5e07ea74facfaa29954"
 }

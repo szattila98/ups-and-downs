@@ -17,9 +17,11 @@
       },
       "process": {
         "all": false,
-        "exit": true,
-        "relaunch": false,
-        "relaunchDangerousAllowSymlinkMacos": false
+        "exit": true
+      },
+      "dialog": {
+        "all": false,
+        "confirm": true
       }
     },
     "windows": [

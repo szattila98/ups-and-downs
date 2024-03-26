@@ -25,9 +25,11 @@
 		background: var(--secondary);
 		border-radius: 24px;
 		display: flex;
-		justify-content: space-evenly;
+		justify-content: space-between;
 		margin: 8px;
 		margin-bottom: 16px;
+		padding-left: 8px;
+		padding-right: 8px;
 
 		& button {
 			align-content: center;
@@ -43,6 +45,11 @@
 			&:hover {
 				background: var(--highlight);
 				cursor: pointer;
+			}
+
+			&:disabled {
+				background: transparent;
+				cursor: auto;
 			}
 		}
 	}

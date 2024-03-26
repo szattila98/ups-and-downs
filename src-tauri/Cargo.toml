@@ -23,9 +23,11 @@ sqlx = { version = "0.7.3", features = [
 ] }
 strum = { version = "0.26.2", features = ["derive"] }
 tap = "1.0.1"
-tauri = { version = "1.6", features = [ "shell-open",
+tauri = { version = "1.6", features = [ "dialog-confirm",
+	"shell-open",
 	"process-exit",
 	"tracing",
+	"dialog",
 ] }
 tauri-specta = { version = "=2.0.0-rc.4", features = ["typescript"] }
 time = { version = "0.3.29", features = ["serde"] }
