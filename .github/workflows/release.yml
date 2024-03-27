@@ -13,12 +13,9 @@ jobs:
         runs-on: ubuntu-20.04
         steps:
             - name: Wait on checks
-              uses: lewagon/wait-on-check-action@v1.3.3
+              uses: poseidon/wait-for-status-checks@v0.3.0
               with:
-                  ref: ${{ github.ref }}
-                  running-workflow-name: 'Lints and tests'
-                  repo-token: ${{ secrets.GITHUB_TOKEN }}
-                  wait-interval: 10
+                  token: ${{ secrets.GITHUB_TOKEN }}
 
             - uses: actions/checkout@v4
               with:

@@ -16,6 +16,7 @@ permissions:
 jobs:
     upload_license:
         name: Upload License
+        if: ${{ github.ref_type == 'tag' }}
         runs-on: ubuntu-20.04
         steps:
             - uses: actions/checkout@v4
@@ -27,6 +28,7 @@ jobs:
 
     build:
         name: Build - ${{ matrix.platform }}
+        if: ${{ github.ref_type == 'tag' }}
         runs-on: ${{ matrix.platform }}
         strategy:
             matrix:
