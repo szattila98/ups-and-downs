@@ -123,7 +123,7 @@
 			}
 
 			& div[class^='highlight'][data-last='true'] {
-				border-bottom: 2px solid var(--highlight);
+				border-bottom: 4px solid var(--highlight);
 			}
 
 			& .highlight-best {
@@ -143,6 +143,7 @@
 		border-radius: 12px;
 		display: flex;
 		padding: 8px;
+		visibility: hidden;
 
 		& svg {
 			width: 40px;
