@@ -51,3 +51,97 @@ jobs:
               with:
                   body_path: GITHUB_CHANGELOG.md
                   tag_name: ${{ steps.release.outputs.version }}
+
+    build:
+        name: Build - ${{ matrix.platform }}
+        needs: [release]
+        runs-on: ${{ matrix.platform }}
+        strategy:
+            matrix:
+                platform: [macos-latest, windows-latest, ubuntu-20.04]
+
+        steps:
+            - uses: actions/checkout@v4
+
+            - uses: Swatinem/rust-cache@v2
+              with:
+                  shared-key: whooosh-${{ matrix.platform }}
+                  workspaces: src-tauri
+
+            - uses: volta-cli/action@v4
+
+            - uses: dtolnay/rust-toolchain@stable
+
+            - if: matrix.platform == 'ubuntu-20.04'
+              uses: awalsh128/cache-apt-pkgs-action@latest
+              with:
+                  packages: libgtk-3-dev libwebkit2gtk-4.0-dev libayatana-appindicator3-dev librsvg2-dev
+                  version: 1.0
+
+            - run: yarn install --immutable
+
+            - run: yarn tauri build --ci
+
+            - uses: actions/upload-artifact@v4
+              with:
+                  name: artifact-${{ matrix.platform }}
+                  path: src-tauri/target/release/bundle
+                  retention-days: 7
+
+    upload_to_release:
+        needs: [build]
+        name: Publish binaries
+        runs-on: ubuntu-20.04
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+                  fetch-tags: true
+
+            - uses: WyriHaximus/github-action-get-previous-tag@v1.4.0
+              id: get-latest-tag
+
+            - uses: actions/download-artifact@v4
+
+            - run: ls -R
+
+            - name: Copy artifacts to archive
+              run: |
+                  mv artifact-macos-latest macos
+                  chmod +x -R macos
+                  cp -r LICENSE macos/LICENSE
+                  tar -czf macos.tar.gz macos/*
+
+                  mv artifact-windows-latest windows
+                  chmod +x -R windows
+                  cp -r LICENSE windows/LICENSE
+                  tar -czf windows.tar.gz windows/*
+
+                  mv artifact-ubuntu-20.04 linux
+                  chmod +x -R linux
+                  cp -r LICENSE linux/LICENSE
+                  tar -czf linux.tar.gz linux/*
+
+            - uses: svenstaro/upload-release-action@v2
+              with:
+                  repo_token: ${{ secrets.GITHUB_TOKEN }}
+                  file: macos.tar.gz
+                  tag: ${{ steps.get-latest-tag.outputs.tag }}
+                  asset_name: macos-${{ github.sha }}.tar.gz
+                  body: 'macos app and dmg'
+
+            - uses: svenstaro/upload-release-action@v2
+              with:
+                  repo_token: ${{ secrets.GITHUB_TOKEN }}
+                  file: windows.tar.gz
+                  tag: ${{ steps.get-latest-tag.outputs.tag }}
+                  asset_name: windows-${{ github.sha }}.tar.gz
+                  body: 'windows msi and exe'
+
+            - uses: svenstaro/upload-release-action@v2
+              with:
+                  repo_token: ${{ secrets.GITHUB_TOKEN }}
+                  file: linux.tar.gz
+                  tag: ${{ steps.get-latest-tag.outputs.tag }}
+                  asset_name: linux-${{ github.sha }}.tar.gz
+                  body: 'linux deb and appimage'
