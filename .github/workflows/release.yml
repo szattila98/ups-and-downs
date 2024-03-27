@@ -13,11 +13,12 @@ jobs:
         runs-on: ubuntu-20.04
         steps:
             - name: Wait on checks
-              uses: lewagon/wait-on-check-action@master
+              uses: lewagon/wait-on-check-action@v1.3.3
               with:
-                  ref: ${{ github.sha }}
+                  ref: ${{ github.ref }}
+                  running-workflow-name: 'Lints and tests'
                   repo-token: ${{ secrets.GITHUB_TOKEN }}
-                  check-name: 'Backend checks'
+                  wait-interval: 10
 
             - uses: actions/checkout@v4
               with:
