@@ -13,16 +13,16 @@
 	<img src="/img/logo.png" alt="logo" />
 </header>
 <main>
-	<button on:click={() => dispatch('toNew')}>
+	<button type="button" on:click={() => dispatch('toNew')}>
 		{#if $todaysHighlight.length}
 			Edit highlight
 		{:else}
 			New highlights
 		{/if}
 	</button>
-	<button on:click={() => dispatch('toList')}>List</button>
-	<button>Settings</button>
-	<button on:click={() => dispatch('exit')}>Exit</button>
+	<button type="button" on:click={() => dispatch('toList')}>List</button>
+	<button type="button">Settings</button>
+	<button type="button" on:click={() => dispatch('exit')}>Exit</button>
 </main>
 <footer>
 	<a href="https://github.com/szattila98/ups-and-downs" target="_blank">
