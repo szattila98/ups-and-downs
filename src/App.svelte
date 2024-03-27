@@ -49,6 +49,10 @@
 	const editHighlight = async ({ detail: request }: CustomEvent<EditHighlightRequest>) => {
 		$todaysHighlight = await commands.editHighlight(request);
 	};
+
+	const quit = async () => {
+		await exit(0);
+	};
 </script>
 
 <JumpToTopButton />
@@ -60,7 +64,7 @@
 	<Menu
 		on:toNew={() => (state = AppState.Record)}
 		on:toList={() => (state = AppState.List)}
-		on:exit={async () => await exit(0)}
+		on:exit={quit}
 	/>
 {:else if state === AppState.Record}
 	<Record
