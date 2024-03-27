@@ -21,7 +21,7 @@
 		{/if}
 	</button>
 	<button type="button" on:click={() => dispatch('toList')}>List</button>
-	<button type="button">Settings</button>
+	<!-- <button type="button">Settings</button> -->
 	<button type="button" on:click={() => dispatch('exit')}>Exit</button>
 </main>
 <footer>
@@ -78,11 +78,15 @@
 
 	footer {
 		align-items: center;
+		bottom: 8px;
 		display: flex;
 		flex-direction: row;
 		font-size: larger;
 		justify-content: center;
+		left: 50%;
 		padding-top: 20px;
+		position: absolute;
+		right: 50%;
 
 		& img {
 			width: 32px;
