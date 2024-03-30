@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## backend-0.1.1 - 2024-03-30
+#### Bug Fixes
+- enter only submits, no new line is added - (e966c4c) - szattila98
+- window state is saved on exit button - (0506289) - szattila98
+- user input is trimmed - (1d55cc1) - szattila98
+
+- - -
+
 ## backend-0.1.0 - 2024-03-27
 #### Continuous Integration
 - lint fixes and older ubuntu runner - (2d8bf80) - szattila98

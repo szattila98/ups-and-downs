@@ -2,6 +2,23 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [0.1.1](https://github.com/szattila98/ups-and-downs/compare/0.1.0..0.1.1) - 2024-03-30
+### Package updates
+- [backend-0.1.1](src-tauri) bumped to [backend-0.1.1](https://github.com/szattila98/ups-and-downs/compare/backend-0.1.0..backend-0.1.1)
+### Global changes
+#### Bug Fixes
+- views do not invoke commands anymore, only main app - ([8cc4a2a](https://github.com/szattila98/ups-and-downs/commit/8cc4a2af7f67f1b34b6a094eb2b8290e905e96b8)) - [@szattila98](https://github.com/szattila98)
+- added padding to textarea - ([4b86318](https://github.com/szattila98/ups-and-downs/commit/4b863185a7d5d01a93e1d23e41f401334d6f2c2c)) - [@szattila98](https://github.com/szattila98)
+- selected counter appears next to delete button, submitting 1 length content no longer panics - ([7fb27bb](https://github.com/szattila98/ups-and-downs/commit/7fb27bb0ad6919f15206510ab2ad325454e27e99)) - [@szattila98](https://github.com/szattila98)
+- enter only submits, no new line is added - ([e966c4c](https://github.com/szattila98/ups-and-downs/commit/e966c4cdc214d6e3fd0a7e77fa12ca09d92bd304)) - [@szattila98](https://github.com/szattila98)
+- image flicker no longe occurs, transitions ease navigation - ([ef20927](https://github.com/szattila98/ups-and-downs/commit/ef2092735f76eef61a298a8d7a6732b96db765c3)) - [@szattila98](https://github.com/szattila98)
+- window state is saved on exit button - ([0506289](https://github.com/szattila98/ups-and-downs/commit/0506289fd7e49bb7c63b13a9bd9f015077faa107)) - [@szattila98](https://github.com/szattila98)
+- user input is trimmed - ([1d55cc1](https://github.com/szattila98/ups-and-downs/commit/1d55cc1c44b537392481af00a40bdf7c7679cf02)) - [@szattila98](https://github.com/szattila98)
+#### Continuous Integration
+- lints and tests run in parralel for backend and frontend - ([bf599aa](https://github.com/szattila98/ups-and-downs/commit/bf599aa6de22215b78fa36a2fbeb2bb7b4c2a452)) - [@szattila98](https://github.com/szattila98)
+
+- - -
+
 ## [0.1.0](https://github.com/szattila98/ups-and-downs/compare/751e68c4af7fc24cdd63dec33dacdc909095ecdc..0.1.0) - 2024-03-27
 ### Package updates
 - [backend](src-tauri) bumped to [backend-0.1.0](https://github.com/szattila98/ups-and-downs/compare/751e68c4af7fc24cdd63dec33dacdc909095ecdc..backend-0.1.0)
