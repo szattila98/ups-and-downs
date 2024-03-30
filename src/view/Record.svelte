@@ -11,7 +11,6 @@
 	import { randomColor } from '@/lib/utils/color';
 	import { fade } from 'svelte/transition';
 
-	const TEXTAREA_ROWS = 5;
 	const fadeInDurationMs = 200;
 
 	const dispatch = createEventDispatcher<{
@@ -209,11 +208,17 @@
 				</div>
 			{/if}
 		</div>
-		{#if kind === HighlightKind.WORST}
-			<textarea bind:value={model['WORST'].content} rows={TEXTAREA_ROWS} maxlength="2000" />
-		{:else}
-			<textarea bind:value={model['BEST'].content} rows={TEXTAREA_ROWS} maxlength="2000" />
-		{/if}
+		<textarea
+			on:keypress={(event) => {
+				if (event.key === 'Enter') {
+					event.preventDefault();
+					submit();
+				}
+			}}
+			bind:value={model[kind].content}
+			rows={5}
+			maxlength="2000"
+		/>
 	</form>
 
 	{#if shownHighlights.length}

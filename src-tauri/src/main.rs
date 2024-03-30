@@ -27,8 +27,12 @@ fn main() {
         specta_builder.into_plugin()
     };
 
+    #[cfg(debug_assertions)]
+    static LEVEL: Level = Level::DEBUG;
+    #[cfg(not(debug_assertions))]
+    static LEVEL: Level = Level::INFO;
     tracing_subscriber::FmtSubscriber::builder()
-        .with_max_level(Level::INFO)
+        .with_max_level(LEVEL)
         .init();
 
     tauri::Builder::default()
