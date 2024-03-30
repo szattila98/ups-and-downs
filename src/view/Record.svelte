@@ -395,9 +395,8 @@
 			border-style: solid;
 			border-width: 4px;
 			font-size: small;
-			padding: 0;
+			padding: 4px;
 			resize: none;
-			width: 97%;
 		}
 	}
 
