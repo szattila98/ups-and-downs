@@ -49,11 +49,16 @@ fn create_db_file(db_path: &str) {
     fs::File::create(db_path).expect("cannot create sqlite file");
 }
 
+#[cfg(debug_assertions)]
+static DB_PATH: &str = "database-dev.sqlite";
+#[cfg(not(debug_assertions))]
+static DB_PATH: &str = "database.sqlite";
+
 fn get_db_path(path_resolver: &PathResolver) -> String {
     path_resolver
         .app_data_dir()
         .expect("could not resolve app data directory")
-        .join("database.sqlite")
+        .join(DB_PATH)
         .to_str()
         .expect("could not convert database path to string")
         .to_string()
