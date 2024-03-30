@@ -15,6 +15,9 @@ return await TAURI_INVOKE("plugin:tauri-specta|delete_highlight", { ids });
 },
 async editHighlight(request: EditHighlightRequest) : Promise<Highlight[]> {
 return await TAURI_INVOKE("plugin:tauri-specta|edit_highlight", { request });
+},
+async quit() : Promise<null> {
+return await TAURI_INVOKE("plugin:tauri-specta|quit");
 }
 }
 

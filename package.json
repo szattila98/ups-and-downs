@@ -29,7 +29,6 @@
 		"@floating-ui/dom": "1.6.3",
 		"@tauri-apps/api": "1.5.3",
 		"dayjs": "1.11.10",
-		"tauri-plugin-window-state-api": "https://github.com/tauri-apps/tauri-plugin-window-state#v1",
 		"ts-toolbelt": "^9.6.0"
 	},
 	"devDependencies": {

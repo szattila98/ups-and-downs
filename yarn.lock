@@ -4535,15 +4535,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tauri-plugin-window-state-api@https://github.com/tauri-apps/tauri-plugin-window-state#v1":
-  version: 0.0.0
-  resolution: "tauri-plugin-window-state-api@https://github.com/tauri-apps/tauri-plugin-window-state.git#commit=002cf15f6a1e4969a678a4ade680cd60477a8a53"
-  dependencies:
-    "@tauri-apps/api": "npm:1.5.3"
-  checksum: 10c0/61f24697f6c070c2be9dc7ce42cc3c3fbc06505025898cb175b0eb50ff6b1cd8a8bcb879e12011747ecdf6ca191a6108338204b4f64bd13c56cc04c362c9168a
-  languageName: node
-  linkType: hard
-
 "test-exclude@npm:^6.0.0":
   version: 6.0.0
   resolution: "test-exclude@npm:6.0.0"
@@ -4767,7 +4758,6 @@ __metadata:
     stylelint-prettier: "npm:5.0.0"
     svelte: "npm:4.2.12"
     svelte-check: "npm:3.6.6"
-    tauri-plugin-window-state-api: "https://github.com/tauri-apps/tauri-plugin-window-state#v1"
     ts-toolbelt: "npm:^9.6.0"
     tslib: "npm:2.6.2"
     typescript: "npm:5.3.3"
