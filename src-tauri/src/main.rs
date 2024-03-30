@@ -2,8 +2,10 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 use db::DbWrapper;
+use tap::TapFallible;
 use tauri::{async_runtime::block_on, Manager};
-use tracing::Level;
+use tauri_plugin_window_state::{AppHandleExt, StateFlags};
+use tracing::{error, Level};
 
 mod db;
 mod highlight;
@@ -15,7 +17,8 @@ fn main() {
             highlight::get_highlights_by_date,
             highlight::list_highlights,
             highlight::delete_highlight,
-            highlight::edit_highlight
+            highlight::edit_highlight,
+            quit
         ]);
 
         #[cfg(debug_assertions)]
@@ -40,4 +43,13 @@ fn main() {
         .plugin(tauri_plugin_window_state::Builder::default().build())
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
+}
+
+#[tauri::command]
+#[specta::specta]
+fn quit(app_handle: tauri::AppHandle) {
+    let _ = app_handle
+        .save_window_state(StateFlags::all())
+        .tap_err(|error| error!("could not save window state: {}", error));
+    app_handle.exit(0);
 }

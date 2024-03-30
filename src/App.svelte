@@ -51,7 +51,7 @@
 	};
 
 	const quit = async () => {
-		await exit(0);
+		await commands.quit();
 	};
 </script>
 

@@ -15,10 +15,6 @@
         "all": false,
         "open": "https://github.com/szattila98/ups-and-downs"
       },
-      "process": {
-        "all": false,
-        "exit": true
-      },
       "dialog": {
         "all": false,
         "confirm": true
