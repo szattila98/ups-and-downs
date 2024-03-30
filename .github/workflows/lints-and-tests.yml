@@ -24,7 +24,6 @@ jobs:
     frontend-checks:
         runs-on: ubuntu-20.04
         name: Frontend checks
-        needs: [commit-check]
         steps:
             - uses: actions/checkout@v4
 
@@ -53,7 +52,6 @@ jobs:
     backend-checks:
         runs-on: ubuntu-20.04
         name: Backend checks
-        needs: [commit-check, frontend-checks]
         steps:
             - uses: actions/checkout@v4
 
