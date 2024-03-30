@@ -41,8 +41,10 @@
 	let deleteIds: number[] = [];
 
 	$: shownHighlights = $todaysHighlight.filter((highlight) => highlight.kind === kind);
-	$: submitDisabled =
-		submitting || (kind === 'WORST' ? !model['WORST'].content : !model['BEST'].content);
+	$: submitDisabled = (() => {
+		const content = model[kind].content;
+		return submitting || !content || content.length <= 1;
+	})();
 	$: showSubmit = !submitDisabled && !updateId && !deleteIds.length;
 	$: showDeleteConfirm = !updateId && deleteIds.length;
 	$: showUpdate = updateId && !deleteIds.length;
@@ -52,7 +54,7 @@
 
 		if (!updateId) {
 			const highlight = model[kind];
-			if (highlight.content) {
+			if (highlight.content && highlight.content.length > 1) {
 				dispatch('submit', { content: highlight.content, kind });
 				model[kind].content = '';
 			}
@@ -94,7 +96,9 @@
 		deleteIds = deleteIds.filter((id) => id !== highlight.id);
 	};
 	const confirmDeletion = async () => {
-		const isOk = await confirm('Delete selected highlights?');
+		const isOk = await confirm(
+			`Delete ${deleteIds.length} highlight${deleteIds.length > 1 ? 's' : ''}?`
+		);
 		if (isOk) {
 			dispatch('delete', deleteIds);
 			deleteIds = [];
@@ -114,7 +118,7 @@
 		slot="right"
 		on:click={confirmDeleteAll}
 		id="delete-todays"
-		disabled={!$todaysHighlight.length}
+		disabled={!$todaysHighlight.length || !!deleteIds.length}
 	>
 		<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path
@@ -170,9 +174,11 @@
 			{:else if showDeleteConfirm}
 				<button
 					type="button"
+					id="delete-specific"
 					on:click={confirmDeletion}
 					in:fade={{ duration: fadeInDurationMs }}
 				>
+					<span>{deleteIds.length}</span>
 					<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
 						><path
 							fill-rule="evenodd"
@@ -346,7 +352,19 @@
 				background: transparent;
 				border: none;
 				display: flex;
+				justify-content: space-between;
 				width: 40px;
+
+				&[id='delete-specific'] {
+					width: 68px;
+
+					& span {
+						background-color: var(--highlight);
+						border-radius: 50%;
+						color: var(--light);
+						padding: 2px 6px 2px;
+					}
+				}
 
 				&:hover {
 					background: var(--highlight);
