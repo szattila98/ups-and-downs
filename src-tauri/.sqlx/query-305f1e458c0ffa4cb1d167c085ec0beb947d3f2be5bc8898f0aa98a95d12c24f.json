@@ -1,0 +1,12 @@
+{
+  "db_name": "SQLite",
+  "query": "\n            DELETE FROM highlight WHERE id IN ($1)\n        ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 1
+    },
+    "nullable": []
+  },
+  "hash": "305f1e458c0ffa4cb1d167c085ec0beb947d3f2be5bc8898f0aa98a95d12c24f"
+}

@@ -42,12 +42,13 @@ pub fn record_highlight(
     state: State<'_, DbWrapper>,
     request: CreateHighlightRequest,
 ) -> Vec<Highlight> {
+    let content = request.content.trim();
     let future = sqlx::query!(
         r#"
             INSERT INTO highlight ( content, kind ) 
             VALUES ( $1, $2 )
         "#,
-        request.content,
+        content,
         request.kind
     )
     .execute(&state.pool);
@@ -98,13 +99,19 @@ pub fn delete_highlight(state: State<'_, DbWrapper>, ids: Vec<Id>) {
     if ids.is_empty() {
         return;
     }
-    let params = format!("?{}", ", ?".repeat(ids.len() - 1));
-    let query_str = format!("DELETE FROM highlight WHERE id IN ({})", params);
-    let mut query = sqlx::query(&query_str);
-    for i in ids {
-        query = query.bind(i);
-    }
-    block_on(query.execute(&state.pool)).expect("error while deleting highlights from database");
+    let params = ids
+        .into_iter()
+        .map(|id| id.to_string())
+        .collect::<Vec<_>>()
+        .join(",");
+    let future = sqlx::query!(
+        r#"
+            DELETE FROM highlight WHERE id IN ($1)
+        "#,
+        params
+    )
+    .execute(&state.pool);
+    block_on(future).expect("error while deleting highlights from database");
 }
 
 #[derive(Debug, Serialize, Deserialize, specta::Type)]
@@ -119,13 +126,14 @@ pub fn edit_highlight(
     state: State<'_, DbWrapper>,
     request: EditHighlightRequest,
 ) -> Vec<Highlight> {
+    let content = request.content.trim();
     let future = sqlx::query!(
         r#"
             UPDATE highlight
             SET content = $1, updated_at = CURRENT_TIMESTAMP
             WHERE id = $2;
         "#,
-        request.content,
+        content,
         request.id
     )
     .execute(&state.pool);

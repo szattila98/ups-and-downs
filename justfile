@@ -23,3 +23,6 @@ watch:
 lint:
     @yarn lint
     @cd src-tauri && cargo fmt --all -- --check && cargo clippy
+
+sqlx-prepare:
+    @cd src-tauri && cargo sqlx prepare

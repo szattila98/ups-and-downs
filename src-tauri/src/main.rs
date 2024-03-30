@@ -34,12 +34,6 @@ fn main() {
             let db_path = db::init(&path_resolver);
             let pool = block_on(db::establish_connection(db_path));
             app.manage(DbWrapper { pool });
-
-            #[cfg(debug_assertions)] // only include this code on debug builds
-            {
-                let window = app.get_window("main").expect("cannot get main window");
-                window.open_devtools();
-            }
             Ok(())
         })
         .plugin(specta_builder)
