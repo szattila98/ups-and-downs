@@ -4,7 +4,7 @@
 	import Record from './view/Record.svelte';
 	import Menu from './view/Menu.svelte';
 	import List from './view/List.svelte';
-	import { todaysHighlight } from './store';
+	import { highlights, todaysHighlight } from './store';
 	import Spinner from './lib/components/Spinner.svelte';
 	import JumpToTopButton from './lib/components/JumpToTopButton.svelte';
 	import { getToday } from './lib/utils/date';
@@ -40,6 +40,11 @@
 	};
 
 	const toMenu = () => (state = AppState.Menu);
+	const toList = async () => {
+		state = AppState.Loading;
+		$highlights = await commands.listHighlights();
+		state = AppState.List;
+	};
 
 	const deleteHighlights = async ({ detail: ids }: CustomEvent<number[]>) => {
 		await commands.deleteHighlight(ids);
@@ -62,11 +67,7 @@
 	</div>
 {:else if state === AppState.Menu}
 	<div in:fade={{ duration: 200 }}>
-		<Menu
-			on:toNew={() => (state = AppState.Record)}
-			on:toList={() => (state = AppState.List)}
-			on:exit={quit}
-		/>
+		<Menu on:toNew={() => (state = AppState.Record)} on:toList={toList} on:exit={quit} />
 	</div>
 {:else if state === AppState.Record}
 	<div in:fade={{ duration: 100 }}>

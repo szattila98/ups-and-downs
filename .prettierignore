@@ -6,3 +6,5 @@ yarn.lock
 /src-tauri
 src/bindings.ts
 /.vscode
+
+CHANGELOG.md
