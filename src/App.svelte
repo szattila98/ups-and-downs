@@ -5,10 +5,10 @@
 	import Menu from './view/Menu.svelte';
 	import List from './view/List.svelte';
 	import { todaysHighlight } from './store';
-	import { exit } from '@tauri-apps/api/process';
 	import Spinner from './lib/components/Spinner.svelte';
 	import JumpToTopButton from './lib/components/JumpToTopButton.svelte';
 	import { getToday } from './lib/utils/date';
+	import { fade } from 'svelte/transition';
 
 	enum AppState {
 		Loading,
@@ -61,20 +61,26 @@
 		<Spinner />
 	</div>
 {:else if state === AppState.Menu}
-	<Menu
-		on:toNew={() => (state = AppState.Record)}
-		on:toList={() => (state = AppState.List)}
-		on:exit={quit}
-	/>
+	<div in:fade={{ duration: 200 }}>
+		<Menu
+			on:toNew={() => (state = AppState.Record)}
+			on:toList={() => (state = AppState.List)}
+			on:exit={quit}
+		/>
+	</div>
 {:else if state === AppState.Record}
-	<Record
-		on:submit={newHighlight}
-		on:toMenu={toMenu}
-		on:delete={deleteHighlights}
-		on:edit={editHighlight}
-	/>
+	<div in:fade={{ duration: 100 }}>
+		<Record
+			on:submit={newHighlight}
+			on:toMenu={toMenu}
+			on:delete={deleteHighlights}
+			on:edit={editHighlight}
+		/>
+	</div>
 {:else if state === AppState.List}
-	<List on:toMenu={toMenu} />
+	<div in:fade={{ duration: 100 }}>
+		<List on:toMenu={toMenu} />
+	</div>
 {/if}
 
 <style scoped>

@@ -36,6 +36,7 @@
 		justify-content: center;
 		margin-bottom: 12px;
 		& img {
+			height: 182px;
 			margin-top: 16px;
 			width: 160px;
 		}
