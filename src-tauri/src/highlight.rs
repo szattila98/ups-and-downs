@@ -99,19 +99,13 @@ pub fn delete_highlight(state: State<'_, DbWrapper>, ids: Vec<Id>) {
     if ids.is_empty() {
         return;
     }
-    let params = ids
-        .into_iter()
-        .map(|id| id.to_string())
-        .collect::<Vec<_>>()
-        .join(",");
-    let future = sqlx::query!(
-        r#"
-            DELETE FROM highlight WHERE id IN ($1)
-        "#,
-        params
-    )
-    .execute(&state.pool);
-    block_on(future).expect("error while deleting highlights from database");
+    let params = format!("?{}", ", ?".repeat(ids.len() - 1));
+    let query_str = format!("DELETE FROM highlight WHERE id IN ({})", params);
+    let mut query = sqlx::query(&query_str);
+    for i in ids {
+        query = query.bind(i);
+    }
+    block_on(query.execute(&state.pool)).expect("error while deleting highlights from database");
 }
 
 #[derive(Debug, Serialize, Deserialize, specta::Type)]
