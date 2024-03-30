@@ -1,26 +1,17 @@
 <script lang="ts">
-	import { commands, type Highlight } from '../bindings';
+	import { type Highlight } from '../bindings';
 	import dayjs from 'dayjs';
 	import RandomEmoji from '../lib/components/RandomEmoji.svelte';
 	import { happyEmojis, sadEmojis } from '../lib/constants/emojis';
 	import ViewHeader from '@/lib/layouts/ViewHeader.svelte';
 	import ViewMain from '@/lib/layouts/ViewMain.svelte';
 	import { randomColor } from '@/lib/utils/color';
-	import { onMount } from 'svelte';
-	import Spinner from '@/lib/components/Spinner.svelte';
 	import { DATE_FORMAT } from '@/lib/utils/date';
-
-	let loading = true;
-	let highlights: Highlight[] = [];
-
-	onMount(async () => {
-		highlights = await commands.listHighlights();
-		loading = false;
-	});
+	import { highlights } from '@/store';
 
 	type GroupedHighlights = Record<string, Highlight[]>;
 
-	$: shownHighlights = highlights.reduce((group: GroupedHighlights, highlight) => {
+	$: shownHighlights = $highlights.reduce((group: GroupedHighlights, highlight) => {
 		const date = dayjs(highlight.created_at).format(DATE_FORMAT);
 		if (!group[date]) {
 			group[date] = [];
@@ -47,39 +38,35 @@
 	</button>
 </ViewHeader>
 <ViewMain>
-	{#if loading}
-		<Spinner />
-	{:else}
-		{#each Object.entries(shownHighlights) as [date, highlights]}
-			{@const bests = highlights.filter((highlight) => highlight.kind === 'BEST')}
-			{@const worsts = highlights.filter((highlight) => highlight.kind === 'WORST')}
-			<div class="highlight">
-				<span class="highlight-date">
-					{dayjs(date, DATE_FORMAT).format('LL')}
-				</span>
-				<div class="highlight-container">
-					{#each bests as best, index}
-						<div
-							class="highlight-best"
-							style:background-color={randomColor('light')}
-							data-last={bests.length === index + 1 && !!worsts.length}
-						>
-							<RandomEmoji emojis={happyEmojis} />
-							<span>{best?.content}</span>
-						</div>
-					{/each}
-					{#each worsts as worst}
-						<div class="highlight-worst" style:background-color={randomColor('dark')}>
-							<RandomEmoji emojis={sadEmojis} />
-							<span>{worst?.content}</span>
-						</div>
-					{/each}
-				</div>
+	{#each Object.entries(shownHighlights) as [date, highlights]}
+		{@const bests = highlights.filter((highlight) => highlight.kind === 'BEST')}
+		{@const worsts = highlights.filter((highlight) => highlight.kind === 'WORST')}
+		<div class="highlight">
+			<span class="highlight-date">
+				{dayjs(date, DATE_FORMAT).format('LL')}
+			</span>
+			<div class="highlight-container">
+				{#each bests as best, index}
+					<div
+						class="highlight-best"
+						style:background-color={randomColor('light')}
+						data-last={bests.length === index + 1 && !!worsts.length}
+					>
+						<RandomEmoji emojis={happyEmojis} />
+						<span>{best?.content}</span>
+					</div>
+				{/each}
+				{#each worsts as worst}
+					<div class="highlight-worst" style:background-color={randomColor('dark')}>
+						<RandomEmoji emojis={sadEmojis} />
+						<span>{worst?.content}</span>
+					</div>
+				{/each}
 			</div>
-		{:else}
-			<p>No highlights to list yet!</p>
-		{/each}
-	{/if}
+		</div>
+	{:else}
+		<p>No highlights to list yet!</p>
+	{/each}
 </ViewMain>
 
 <style scoped>
