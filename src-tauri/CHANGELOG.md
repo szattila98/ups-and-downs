@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## backend-0.1.2 - 2024-03-31
+#### Bug Fixes
+- content with length 1 or 2000 can be submitted without crashing - (e588fdf) - szattila98
+
+- - -
+
 ## backend-0.1.1 - 2024-03-30
 #### Bug Fixes
 - enter only submits, no new line is added - (e966c4c) - szattila98

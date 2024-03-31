@@ -2,6 +2,17 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [0.1.2](https://github.com/szattila98/ups-and-downs/compare/0.1.1..0.1.2) - 2024-03-31
+### Package updates
+- [backend-0.1.2](src-tauri) bumped to [backend-0.1.2](https://github.com/szattila98/ups-and-downs/compare/backend-0.1.1..backend-0.1.2)
+### Global changes
+#### Bug Fixes
+- random emojis are fixed in dimensions - ([ef49417](https://github.com/szattila98/ups-and-downs/commit/ef49417d3e9e793053a56bdcf80d94e938419d67)) - [@szattila98](https://github.com/szattila98)
+- record view radio button has focus - ([528ca87](https://github.com/szattila98/ups-and-downs/commit/528ca871068e157f65e0a1347ac555a4e2ff563a)) - [@szattila98](https://github.com/szattila98)
+- content with length 1 or 2000 can be submitted without crashing - ([e588fdf](https://github.com/szattila98/ups-and-downs/commit/e588fdfe03f672f78e68d2e9e038c6b912e577cd)) - [@szattila98](https://github.com/szattila98)
+
+- - -
+
 ## [0.1.1](https://github.com/szattila98/ups-and-downs/compare/0.1.0..0.1.1) - 2024-03-30
 ### Package updates
 - [backend-0.1.1](src-tauri) bumped to [backend-0.1.1](https://github.com/szattila98/ups-and-downs/compare/backend-0.1.0..backend-0.1.1)
