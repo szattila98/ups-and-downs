@@ -41,10 +41,7 @@
 	let deleteIds: number[] = [];
 
 	$: shownHighlights = $todaysHighlight.filter((highlight) => highlight.kind === kind);
-	$: submitDisabled = (() => {
-		const content = model[kind].content;
-		return submitting || !content || content.length <= 1;
-	})();
+	$: submitDisabled = submitting || !model[kind].content;
 	$: showSubmit = !submitDisabled && !updateId && !deleteIds.length;
 	$: showDeleteConfirm = !updateId && deleteIds.length;
 	$: showUpdate = updateId && !deleteIds.length;
@@ -54,7 +51,7 @@
 
 		if (!updateId) {
 			const highlight = model[kind];
-			if (highlight.content && highlight.content.length > 1) {
+			if (highlight.content && highlight.content.length > 0) {
 				dispatch('submit', { content: highlight.content, kind });
 				model[kind].content = '';
 			}
@@ -222,7 +219,7 @@
 				}
 			}}
 			bind:value={model[kind].content}
-			rows={5}
+			rows="5"
 			maxlength="2000"
 		/>
 	</form>
