@@ -314,6 +314,14 @@
 					margin: 0;
 				}
 
+				& input[type='radio']:focus + label {
+					outline-offset: -2px;
+				}
+
+				& input[type='radio']:focus-visible + label {
+					outline: auto;
+				}
+
 				& label {
 					align-items: center;
 					background: var(--dark);
